@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <!-- Workcenter Block Dialog -->
+        <record id="test_form" model="ir.ui.view">
+            <field name="name">test.form</field>
+            <field name="model">test</field>
+            <field name="arch" type="xml">
+                <form string="Test">
+                    <group>
+                        <field name="code"/>
+                        <field name="name" placeholder="Add a description..."/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="test_tree" model="ir.ui.view">
+            <field name="name">test.tree</field>
+            <field name="model">test</field>
+            <field name="arch" type="xml">
+                <tree string="Menu" toolbar="1">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_test" model="ir.actions.act_window">
+            <field name="name">Test</field>
+            <field name="res_model">test</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_maintenance_control_system" name="Maintenance Control System"/>
+            <menuitem id="menu_test" parent="menu_maintenance_control_system" action="action_test" name="Test"/>
+
+    </data>
+</odoo>
