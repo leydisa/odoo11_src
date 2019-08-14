@@ -15,6 +15,7 @@
     'data': [
         'data/data.xml',
         'views/maintenance_control_system.xml',
+        'views/res_partner.xml',
     ],
     'qweb': [
     ],

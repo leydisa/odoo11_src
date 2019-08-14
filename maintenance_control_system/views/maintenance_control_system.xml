@@ -36,7 +36,12 @@
         </record>
 
         <menuitem id="menu_maintenance_control_system" name="Maintenance Control System"/>
-            <menuitem id="menu_test" parent="menu_maintenance_control_system" action="action_test" name="Test"/>
+            <menuitem id="menu_report" parent="menu_maintenance_control_system" name="Reports" />
+                <menuitem id="menu_test1" parent="menu_report" name="Test" action="action_test"/>
+            <menuitem id="menu_customer" parent="menu_maintenance_control_system" name="Customer" action="action_partner_customer_form"/>
+            <menuitem id="menu_supplier" parent="menu_maintenance_control_system" name="Supplier" action="action_partner_customer_form"/>
+            <menuitem id="menu_config" parent="menu_maintenance_control_system" name="Configuration"/>
+                <menuitem id="menu_test3" parent="menu_config" name="Test" action="action_test"/>
 
     </data>
 </odoo>
