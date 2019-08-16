@@ -35,10 +35,11 @@
                                 <field name="name" default_focus="1" placeholder="Name"/>
                             </h1>
                         </div>
-                        <group>
+                        <group col="12">
+                            <group colspan="8"/>
                             <field name="date" string="Creation Date" colspan="4"/>
-                            <field name="phone"/>
-                            <field name="email"/>
+                            <field name="phone" colspan="12"/>
+                            <field name="email" colspan="12"/>
                         </group>
                     </sheet>
                 </form>
