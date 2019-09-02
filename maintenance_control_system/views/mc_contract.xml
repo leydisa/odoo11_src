@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- mc.contract views-->
+        <record id="view_mc_contract_tree" model="ir.ui.view">
+            <field name="name">view.mc.customer.tree</field>
+            <field name="model">mc.contract</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Contacts">
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="description"/>
+                    <field name="partner_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_contract_form" model="ir.ui.view">
+            <field name="name">view.mc.contract.form</field>
+            <field name="model">mc.contract</field>
+            <field name="arch" type="xml">
+                <form string="Contract">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                            </group>
+                            <group>
+                                <field name="date" colspan="2"/>
+                                <field name="expiration_date" colspan="2"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group colspan="2">
+                                <field name="partner_id"/>
+                            </group>
+                            <group colspan="2">
+                                <field name="description"/>
+                            </group>
+                            <group colspan="2">
+                                <field name="file" filename="filename"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_mc_contract_search" model="ir.ui.view">
+            <field name="model">mc.contract</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code"/>
+                    <field name="description"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_mc_contract_form" model="ir.actions.act_window">
+            <field name="name">Contract</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.contract</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="filter" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

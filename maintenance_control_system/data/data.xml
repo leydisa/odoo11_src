@@ -2,5 +2,69 @@
 <odoo>
     <data noupdate="0">
 
+        <record id="province_01" model="mc.province">
+            <field name="name">Pinar del Río</field>
+        </record>
+
+        <record id="province_02" model="mc.province">
+            <field name="name">Artemisa</field>
+        </record>
+
+        <record id="province_03" model="mc.province">
+            <field name="name">Ciudad de La Habana</field>
+        </record>
+
+        <record id="province_04" model="mc.province">
+            <field name="name">Mayabeque</field>
+        </record>
+
+        <record id="province_05" model="mc.province">
+            <field name="name">Matanzas</field>
+        </record>
+
+        <record id="province_06" model="mc.province">
+            <field name="name">Cienfuegos</field>
+        </record>
+
+        <record id="province_07" model="mc.province">
+            <field name="name">Villa Clara</field>
+        </record>
+
+        <record id="province_08" model="mc.province">
+            <field name="name">Sancti Spíritus</field>
+        </record>
+
+        <record id="province_09" model="mc.province">
+            <field name="name">Ciego de Ávila</field>
+        </record>
+
+        <record id="province_10" model="mc.province">
+            <field name="name">Camagüey</field>
+        </record>
+
+        <record id="province_11" model="mc.province">
+            <field name="name">Las Tunas</field>
+        </record>
+
+        <record id="province_12" model="mc.province">
+            <field name="name">Granma</field>
+        </record>
+
+        <record id="province_13" model="mc.province">
+            <field name="name">Holguín</field>
+        </record>
+
+        <record id="province_14" model="mc.province">
+            <field name="name">Santiago de Cuba</field>
+        </record>
+
+        <record id="province_15" model="mc.province">
+            <field name="name">Guantánamo</field>
+        </record>
+
+        <record id="province_16" model="mc.province">
+            <field name="name">Municipio Especial Isla de la Juventud</field>
+        </record>
+
     </data>
 </odoo>

@@ -14,8 +14,11 @@
     ],
     'data': [
         'data/data.xml',
-        'views/maintenance_control_system.xml',
-        'views/res_partner.xml',
+        'data/sequence.xml',
+        'views/mc_partner.xml',
+        'views/mc_contract.xml',
+        'views/mc_nomenclator.xml',
+        'views/maintenance_control.xml',
     ],
     'qweb': [
     ],

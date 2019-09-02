@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- MENU -->
+        <menuitem id="menu_maintenance_control" name="Maintenance Control"/>
+            <menuitem id="menu_report" parent="menu_maintenance_control" name="Reports" sequence="10" action="action_mc_partner_customer_form"/>
+        <menuitem id="menu_customer" parent="menu_maintenance_control" name="Customer" sequence="20" action="action_mc_partner_customer_form"/>
+        <menuitem id="menu_supplier" parent="menu_maintenance_control" name="Supplier" sequence="30" action="action_mc_partner_supplier_form"/>
+        <menuitem id="menu_contract" parent="menu_maintenance_control" name="Contract" sequence="40" action="action_mc_contract_form"/>
+        <menuitem id="menu_config" parent="menu_maintenance_control" name="Configurations" sequence="100"/>
+            <menuitem id="menu_province" parent="menu_config" name="Provinces" sequence="10" action="action_mc_province_form"/>
+            <menuitem id="menu_entity" parent="menu_config" name="Entities" sequence="20" action="action_mc_entity_form"/>
+            <menuitem id="menu_um" parent="menu_config" name="UM" sequence="30" action="action_mc_um_form"/>
+            <menuitem id="menu_material" parent="menu_config" name="Material" sequence="40" action="action_mc_material_form"/>
+UM
+    </data>
+</odoo>

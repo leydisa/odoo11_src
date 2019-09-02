@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- mc_partner_sequence -->
+        <record id="sequence_mc_customer" model="ir.sequence">
+            <field name="name">MC Customer Sequence</field>
+            <field name="code">mc.customer.sequence</field>
+            <field name="prefix">CL</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">6</field>
+        </record>
+
+        <record id="sequence_mc_supplier" model="ir.sequence">
+            <field name="name">MC Supplier Sequence</field>
+            <field name="code">mc.supplier.sequence</field>
+            <field name="prefix">PR</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">6</field>
+        </record>
+
+    </data>
+</odoo>

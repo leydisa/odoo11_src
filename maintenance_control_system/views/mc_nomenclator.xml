@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- mc.province views-->
+        <record id="view_mc_province_tree" model="ir.ui.view">
+            <field name="name">view.mc.province.tree</field>
+            <field name="model">mc.province</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Provinces">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_province_form" model="ir.ui.view">
+            <field name="name">view.mc.province.form</field>
+            <field name="model">mc.province</field>
+            <field name="arch" type="xml">
+                <form string="Province">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" colspan="2"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- mc.entity views-->
+        <record id="view_mc_entity_tree" model="ir.ui.view">
+            <field name="name">view.mc.entity.tree</field>
+            <field name="model">mc.entity</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Provinces">
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_entity_form" model="ir.ui.view">
+            <field name="name">view.mc.entity.form</field>
+            <field name="model">mc.entity</field>
+            <field name="arch" type="xml">
+                <form string="Entity">
+                    <sheet>
+                        <group col="4">
+                            <field name="name" colspan="4"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- mc.UM views-->
+        <record id="view_mc_um_tree" model="ir.ui.view">
+            <field name="name">view.mc.um.tree</field>
+            <field name="model">um</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="UM">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_um_form" model="ir.ui.view">
+            <field name="name">view.mc.um.form</field>
+            <field name="model">um</field>
+            <field name="arch" type="xml">
+                <form string="UM">
+                    <sheet>
+                        <group col="6">
+                            <field name="code" colspan="2"/>
+                            <field name="name" colspan="4"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- mc.material views-->
+        <record id="view_mc_material_tree" model="ir.ui.view">
+            <field name="name">view.mc.material.tree</field>
+            <field name="model">mc.material</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Material">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="um"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_material_form" model="ir.ui.view">
+            <field name="name">view.mc.material.form</field>
+            <field name="model">mc.material</field>
+            <field name="arch" type="xml">
+                <form string="Material">
+                    <sheet>
+                        <group col="6">
+                            <field name="name" colspan="4"/>
+                            <field name="um" colspan="2"/>
+                            <field name="description" colspan="6"/>
+                            <field name="price_ids" colspan="6">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="price_cuc"/>
+                                    <field name="price_cup"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_mc_province_form" model="ir.actions.act_window">
+            <field name="name">Province</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.province</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_mc_entity_form" model="ir.actions.act_window">
+            <field name="name">Entity</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.entity</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_mc_um_form" model="ir.actions.act_window">
+            <field name="name">UM</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">um</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_mc_material_form" model="ir.actions.act_window">
+            <field name="name">Material</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.material</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="filter" eval="True"/>
+        </record>
+
+    </data>
+</odoo>
