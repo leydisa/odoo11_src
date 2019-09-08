@@ -23,25 +23,14 @@
             <field name="arch" type="xml">
                 <form string="Contract">
                     <sheet>
-                        <group>
-                            <group>
-                                <field name="code"/>
-                            </group>
-                            <group>
-                                <field name="date" colspan="2"/>
-                                <field name="expiration_date" colspan="2"/>
-                            </group>
-                        </group>
-                        <group>
-                            <group colspan="2">
-                                <field name="partner_id"/>
-                            </group>
-                            <group colspan="2">
-                                <field name="description"/>
-                            </group>
-                            <group colspan="2">
-                                <field name="file" filename="filename"/>
-                            </group>
+                        <group col="6">
+                            <field name="code" colspan="2"/>
+                            <field name="date" colspan="4"/>
+                            <separator colspan="2"/>
+                            <field name="expiration_date" colspan="4"/>
+                            <field name="partner_id" colspan="6"/>
+                            <field name="description" colspan="6"/>
+                            <field name="file" filename="filename" colspan="6"/>
                         </group>
                     </sheet>
                 </form>
@@ -64,7 +53,7 @@
             </field>
         </record>
 
-        <record id="action_mc_contract_form" model="ir.actions.act_window">
+        <record id="action_mc_contract" model="ir.actions.act_window">
             <field name="name">Contract</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mc.contract</field>

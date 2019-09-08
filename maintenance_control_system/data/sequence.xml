@@ -21,5 +21,15 @@
             <field name="padding">6</field>
         </record>
 
+        <!-- work.order sequences -->
+        <record id="sequence_work_order" model="ir.sequence">
+            <field name="name">Work Order Sequence</field>
+            <field name="code">mc.work.order.sequence</field>
+            <field name="prefix">OT/%(year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">9</field>
+        </record>
+
     </data>
 </odoo>

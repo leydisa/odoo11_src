@@ -51,16 +51,10 @@
                                 <field name="name" default_focus="1" placeholder="Name"/>
                             </h1>
                         </div>
-                        <group>
-                            <group>
-                                <field name="code"/>
-                            </group>
-                            <group>
-                                <field name="date"/>
-                            </group>
-                            <group attrs="{'invisible': [('supplier', '=', True)]}">
-                                <field name="type" widget="radio" attrs="{'required':[('supplier','=',False)]}"/>
-                            </group>
+                        <group col="4">
+                                <field name="code" colspan="2"/>
+                                <field name="date" colspan="2"/>
+                                <field name="type" widget="radio" attrs="{'required':[('supplier','=',False)], 'invisible': [('supplier', '=', True)]}" colspan="4"/>
                         </group>
                         <group string="Contact Information">
                             <group>
@@ -117,7 +111,7 @@
             </field>
         </record>
 
-        <record id="action_mc_partner_customer_form" model="ir.actions.act_window">
+        <record id="action_mc_partner_customer" model="ir.actions.act_window">
             <field name="name">Customers</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mc.partner</field>
@@ -133,17 +127,17 @@
             <field name="sequence">1</field>
             <field name="view_mode">tree</field>
             <field name="view_id" ref="view_mc_customer_tree"/>
-            <field name="act_window_id" ref="action_mc_partner_customer_form"/>
+            <field name="act_window_id" ref="action_mc_partner_customer"/>
         </record>
 
         <record id="action_mc_partner_supplier_view_form" model="ir.actions.act_window.view">
             <field name="sequence">2</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_mc_customer_partner_form"/>
-            <field name="act_window_id" ref="action_mc_partner_customer_form"/>
+            <field name="act_window_id" ref="action_mc_partner_customer"/>
         </record>
 
-        <record id="action_mc_partner_supplier_form" model="ir.actions.act_window">
+        <record id="action_mc_partner_supplier" model="ir.actions.act_window">
             <field name="name">Supplier</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mc.partner</field>
@@ -159,14 +153,14 @@
             <field name="sequence">1</field>
             <field name="view_mode">tree</field>
             <field name="view_id" ref="view_mc_supplier_tree"/>
-            <field name="act_window_id" ref="action_mc_partner_supplier_form"/>
+            <field name="act_window_id" ref="action_mc_partner_supplier"/>
         </record>
 
         <record id="action_mc_partner_supplier_view_form" model="ir.actions.act_window.view">
             <field name="sequence">2</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_mc_customer_partner_form"/>
-            <field name="act_window_id" ref="action_mc_partner_supplier_form"/>
+            <field name="act_window_id" ref="action_mc_partner_supplier"/>
         </record>
 
     </data>

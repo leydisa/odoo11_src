@@ -4,3 +4,4 @@
 from . import mc_nomenclator
 from . import mc_partner
 from . import mc_contract
+from . import mc_work_order

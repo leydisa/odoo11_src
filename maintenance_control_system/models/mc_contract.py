@@ -11,6 +11,7 @@ class McContract(models.Model):
     """
     _description = 'Contract'
     _name = "mc.contract"
+    _rec_name = 'code'
 
     def _get_default_date(self):
         """
@@ -28,7 +29,7 @@ class McContract(models.Model):
     description = fields.Text('Description',
                               required=True)
     expiration_date = fields.Date(string='Expiration Date')
-    file = fields.Binary(string="Documento",
+    file = fields.Binary(string="Document",
                          required=True)
     filename = fields.Char('File Name',
                            required=True)

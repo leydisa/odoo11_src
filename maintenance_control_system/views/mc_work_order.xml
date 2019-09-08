@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- mc.partner views-->
+        <record id="view_mc_work_order_tree" model="ir.ui.view">
+            <field name="name">view.mc.work.order.tree</field>
+            <field name="model">mc.work.order</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Contacts">
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_work_order_form" model="ir.ui.view">
+            <field name="name">view.mc.work.order.form</field>
+            <field name="model">mc.work.order</field>
+            <field name="arch" type="xml">
+                <form string="Contact">
+                    <sheet>
+                        <group col="4">
+                            <field name="code" colspan="2"/>
+                            <field name="date" colspan="2"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_mc_work_order_search" model="ir.ui.view">
+            <field name="model">mc.work.order</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <separator/>
+                    <!--                    <filter string="Active" name="all" domain="[('active', '=', True)]" />-->
+                    <!--                    <filter string="Inactive" name="all" domain="[('active', '=', False)]" />-->
+                    <group expand="0" string="Group By">
+                        <filter string="State" domain="[]" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="action_mc_work_order" model="ir.actions.act_window">
+            <field name="name">Work Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.work.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="filter" eval="True"/>
+        </record>
+
+
+    </data>
+</odoo>
