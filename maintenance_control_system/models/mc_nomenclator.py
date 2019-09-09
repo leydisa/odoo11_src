@@ -5,6 +5,27 @@
 from odoo import fields, models, api
 
 
+class DocState(models.Model):
+    """
+    Class to represent the document states.
+    """
+    _description = 'Document State'
+    _name = "doc.state"
+
+    state = fields.Selection([('edition', 'In Edition'),
+                              ('finalized', 'Finalized')],
+                             string="Status",
+                             default='edition')
+
+    @api.one
+    def action_finalized(self):
+        """
+        Sets document to finalized state.
+        :return:
+        """
+        self.state = 'finalized'
+
+
 class McProvince(models.Model):
     """
     Class that represent Province.
@@ -53,10 +74,10 @@ class McMaterial(models.Model):
         """
         :return: to the date of the day
         """
-        year = fields.Date.from_string(fields.Date.today()).strftime('%Y')
-        return '{}-01-01'.format(year)
+        date = fields.Date.from_string(fields.Date.today())
+        return '{}-01-01'.format(date)
 
-    @api.multi
+    @api.one
     @api.depends('price_ids')
     def _compute_current_price(self):
         """
@@ -82,7 +103,8 @@ class McMaterial(models.Model):
                              readonly=True)
     price_id = fields.Many2one('mc.material.price.trace',
                                string='Price',
-                               compute=_compute_current_price)
+                               compute=_compute_current_price,
+                               store=True)
     price_ids = fields.One2many('mc.material.price.trace', 'material_id',
                                 string='Prices',
                                 required=True)
@@ -102,8 +124,8 @@ class McMaterialPriceTrace(models.Model):
         """
         :return: to the date of the day
         """
-        year = fields.Date.from_string(fields.Date.today()).strftime('%Y')
-        return '{}-01-01'.format(year)
+        date = fields.Date.from_string(fields.Date.today())
+        return '{}-01-01'.format(date)
 
     date = fields.Date(string='Date',
                        required=True,
@@ -136,10 +158,10 @@ class McEquipment(models.Model):
         """
         :return: to the date of the day
         """
-        year = fields.Date.from_string(fields.Date.today()).strftime('%Y')
-        return '{}-01-01'.format(year)
+        date = fields.Date.from_string(fields.Date.today())
+        return '{}-01-01'.format(date)
 
-    @api.multi
+    @api.one
     @api.depends('material_expense_ids')
     def _compute_total(self):
         """
@@ -158,9 +180,11 @@ class McEquipment(models.Model):
     material_expense_ids = fields.One2many('mc.equipment.material.expense', 'equipment_id',
                                            string='Material Expenditure Per Equipment')
     total_cuc = fields.Float(string='Total (CUC)',
-                             compute=_compute_total)
+                             compute=_compute_total,
+                             store=True)
     total_cup = fields.Float(string='Total (CUP)',
-                             compute=_compute_total)
+                             compute=_compute_total,
+                             store=True)
 
 
 class McEquipmentMaterialExpense(models.Model):
@@ -170,7 +194,7 @@ class McEquipmentMaterialExpense(models.Model):
     _description = 'Material expenditure per equipment'
     _name = "mc.equipment.material.expense"
 
-    @api.multi
+    @api.one
     @api.depends('factor_ids')
     def _compute_current_factor(self):
         """
@@ -188,7 +212,8 @@ class McEquipmentMaterialExpense(models.Model):
                           readonly=True)
     factor_id = fields.Many2one('mc.equipment.material.factor',
                                  string='Trace Factor',
-                                compute=_compute_current_factor)
+                                compute=_compute_current_factor,
+                                store=True)
     factor_ids = fields.One2many('mc.equipment.material.factor', 'expense_id',
                                  string='Factor Trace',
                                  required=True)
@@ -217,8 +242,8 @@ class McEquipmentMaterialFactor(models.Model):
         """
         :return: to the date of the day
         """
-        year = fields.Date.from_string(fields.Date.today()).strftime('%Y')
-        return '{}-01-01'.format(year)
+        date = fields.Date.from_string(fields.Date.today())
+        return '{}-01-01'.format(date)
 
     date = fields.Date(string='Date',
                        required=True,

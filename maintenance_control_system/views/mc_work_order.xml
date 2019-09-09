@@ -20,13 +20,33 @@
             <field name="name">view.mc.work.order.form</field>
             <field name="model">mc.work.order</field>
             <field name="arch" type="xml">
-                <form string="Contact">
-                    <sheet>
-                        <group col="4">
-                            <field name="code" colspan="2"/>
-                            <field name="date" colspan="2"/>
-                        </group>
-                    </sheet>
+                <form string="Work Order">
+                    <header>
+                        <button name="action_finalized" states="edition" string="Finalized" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="edition, finalized" />
+                    </header>
+                    <group col="4">
+                        <field name="code" colspan="2"/>
+                        <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                        <field name="partner_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                        <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                        <field name="file" filename="filename" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                        <field name="filename" invisible="1"/>
+                        <notebook colspan="4">
+                            <page string="Lines">
+                                <field name="line_ids" nolabel="1" attrs="{'readonly': [('state','=', 'finalized')]}">
+                                    <tree editable="bottom">
+                                        <field name="equipment_id"/>
+                                        <field name="local"/>
+                                        <field name="serial_no"/>
+                                        <field name="inventory_no"/>
+                                        <field name="observation"/>
+                                        <field name="workorder_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
                 </form>
             </field>
         </record>

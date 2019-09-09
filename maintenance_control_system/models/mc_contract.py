@@ -10,6 +10,7 @@ class McContract(models.Model):
     Class that represent Contracts.
     """
     _description = 'Contract'
+    _inherit = ['doc.state']
     _name = "mc.contract"
     _rec_name = 'code'
 
@@ -17,11 +18,13 @@ class McContract(models.Model):
         """
         :return: to the date of the day
         """
-        year = fields.Date.from_string(fields.Date.today()).strftime('%Y')
-        return '{}-01-01'.format(year)
+        date = fields.Date.from_string(fields.Date.today())
+        return '{}-01-01'.format(date)
 
     code = fields.Char(string='Code',
-                       required=True)
+                       required=True,
+                       readonly=True,
+                       default=_('New'))
     date = fields.Date(string='Creation Date',
                        required=True,
                        index=True,
@@ -37,4 +40,13 @@ class McContract(models.Model):
                                  string='Customer',
                                  required=True,
                                  domain="[('supplier', '=', False)]")
+
+    @api.one
+    def action_finalized(self):
+        """
+        Generate the code.
+        :return:
+        """
+        self.code = self.env['ir.sequence'].next_by_code('mc.contract.sequence')
+        return super(McContract, self).action_finalized()
 

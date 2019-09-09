@@ -98,6 +98,8 @@
                     <field name="name"/>
                     <field name="description"/>
                     <field name="um"/>
+                    <field name="price_cuc"/>
+                    <field name="price_cup"/>
                 </tree>
             </field>
         </record>
@@ -168,15 +170,12 @@
                                             <field name="factor"/>
                                         </tree>
                                     </field>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <field name="total_cuc"/>
+                                        <field name="total_cup"/>
+                                    </group>
                                 </page>
                             </notebook>
-                        </group>
-                        <group>
-                            <group/>
-                            <group>
-                                <field name="total_cuc" class="oe_subtotal_footer_separator" />
-                                <field name="total_cup" class="oe_subtotal_footer_separator"/>
-                            </group>
                         </group>
                     </sheet>
                 </form>

@@ -16,9 +16,11 @@
         'data/data.xml',
         'data/sequence.xml',
 
+        'security/security.xml',
+
+        'views/mc_nomenclator.xml',
         'views/mc_partner.xml',
         'views/mc_contract.xml',
-        'views/mc_nomenclator.xml',
         'views/mc_work_order.xml',
         'views/maintenance_control.xml',
     ],

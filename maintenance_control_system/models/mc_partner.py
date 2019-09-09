@@ -16,8 +16,8 @@ class McPartner(models.Model):
         """
         :return: to the date of the day
         """
-        year = fields.Date.from_string(fields.Date.today()).strftime('%Y')
-        return '{}-01-01'.format(year)
+        date = fields.Date.from_string(fields.Date.today())
+        return '{}-01-01'.format(date)
 
     code = fields.Char(string='Code',
                        required=True,
