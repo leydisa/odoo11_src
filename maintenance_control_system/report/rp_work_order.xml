@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="rp_work_order">
+            <t t-call="web.internal_layout">
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h2>Work Order</h2>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <strong>Code:</strong>
+                            </div>
+                            <div class="col-xs-3">
+                                <span t-esc="o.code"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <strong>Creation Date:</strong>
+                            </div>
+                            <div class="col-xs-3">
+                                <span t-esc="o.date"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <strong>Customer:</strong>
+                            </div>
+                            <div class="col-xs-3">
+                                <span t-esc="o.partner_id.name"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <strong>Contract:</strong>
+                            </div>
+                            <div class="col-xs-3">
+                                <span t-esc="o.contract_id.code"/>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table class="table table-condensed" style="border-bottom: 0px solid white !important;">
+                                    <thead>
+                                        <tr>
+                                            <th>Equipment</th>
+                                            <th>Local</th>
+                                            <th>Serial Number</th>
+                                            <th>Inventory Number</th>
+                                            <th>Observation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="o.line_ids" t-as="l">
+                                            <td>
+                                                <span t-field="l.equipment_id.name"/>
+                                            </td>
+                                            <td>
+                                                <t><span t-field="l.local"/></t>
+                                            </td>
+                                            <td>
+                                                <t><span t-field="l.inventory_no"/></t>
+                                            </td>
+                                            <td>
+                                                <t><span t-field="l.serial_no"/></t>
+                                            </td>
+                                            <td>
+                                                <t><span t-field="l.observation"/></t>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

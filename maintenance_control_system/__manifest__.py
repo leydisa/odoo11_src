@@ -18,6 +18,9 @@
 
         'security/security.xml',
 
+        'report/report.xml',
+        'report/rp_work_order.xml',
+
         'views/mc_nomenclator.xml',
         'views/mc_partner.xml',
         'views/mc_contract.xml',
