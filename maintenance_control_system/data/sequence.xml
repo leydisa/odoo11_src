@@ -41,5 +41,24 @@
             <field name="padding">3</field>
         </record>
 
+        <!-- mc.maintenance sequences -->
+        <record id="sequence_maintenance_received_order" model="ir.sequence">
+            <field name="name">Maintenance Received Sequence</field>
+            <field name="code">mc.maintenance.received.sequence</field>
+            <field name="prefix">MR/%(year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">3</field>
+        </record>
+
+        <record id="sequence_maintenance_provided_order" model="ir.sequence">
+            <field name="name">Maintenance Provided Sequence</field>
+            <field name="code">mc.maintenance.provided.sequence</field>
+            <field name="prefix">MR/%(year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">3</field>
+        </record>
+
     </data>
 </odoo>

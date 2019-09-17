@@ -25,6 +25,7 @@
         'views/mc_partner.xml',
         'views/mc_contract.xml',
         'views/mc_work_order.xml',
+        'views/mc_maintenance.xml',
         'views/maintenance_control.xml',
     ],
     'qweb': [

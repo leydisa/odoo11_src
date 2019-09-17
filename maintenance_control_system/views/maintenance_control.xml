@@ -9,6 +9,7 @@
         <menuitem id="menu_supplier" parent="menu_maintenance_control" name="Supplier" sequence="30" action="action_mc_partner_supplier"/>
         <menuitem id="menu_contract" parent="menu_maintenance_control" name="Contract" sequence="40" action="action_mc_contract"/>
         <menuitem id="menu_work_order" parent="menu_maintenance_control" name="Work Order" sequence="50" action="action_mc_work_order"/>
+        <menuitem id="menu_maintenance_received" parent="menu_maintenance_control" name="Maintenance Received" sequence="60" action="action_mc_maintenance_received"/>
 
         <menuitem id="menu_config" parent="menu_maintenance_control" name="Configurations" sequence="100"/>
             <menuitem id="menu_province" parent="menu_config" name="Provinces" sequence="10" action="action_mc_province"/>
