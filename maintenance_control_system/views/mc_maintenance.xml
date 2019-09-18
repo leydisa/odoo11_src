@@ -12,6 +12,20 @@
                     <field name="code"/>
                     <field name="date"/>
                     <field name="partner_id"/>
+                    <!--                    <field name="state"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_maintenance_provided_tree" model="ir.ui.view">
+            <field name="name">view.mc.maintenance.provided.tree</field>
+            <field name="model">mc.maintenance</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Contacts">
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -30,10 +44,7 @@
                         <group col="4">
                             <field name="code" colspan="2"/>
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                            <!--                        <field name="partner_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>-->
-                            <!--                        <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>-->
-                            <!--                        <field name="file" filename="filename" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>-->
-                            <!--                        <field name="filename" invisible="1"/>-->
+                            <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <notebook colspan="4">
                                 <page string="Lines">
                                     <field name="line_ids" nolabel="1" attrs="{'readonly': [('state','=', 'finalized')]}">
@@ -43,6 +54,46 @@
                                             <field name="maintenance_id" invisible="1"/>
                                         </tree>
                                     </field>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <field name="coste_cuc"/>
+                                        <field name="coste_cup"/>
+                                    </group>
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_mc_maintenance_provided_form" model="ir.ui.view">
+            <field name="name">view.mc.maintenance.provided.form</field>
+            <field name="model">mc.maintenance</field>
+            <field name="arch" type="xml">
+                <form string="Work Order">
+                    <header>
+                        <button name="action_finalized" states="edition" string="Finalized" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="edition, finalized" />
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="code" colspan="2"/>
+                            <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <notebook colspan="4">
+                                <page string="Lines">
+                                    <field name="line_ids" nolabel="1" attrs="{'readonly': [('state','=', 'finalized')]}">
+                                        <tree editable="bottom">
+                                            <field name="equipment_id"/>
+                                            <field name="qty"/>
+                                            <field name="maintenance_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <field name="coste_cuc"/>
+                                        <field name="coste_cup"/>
+                                    </group>
                                 </page>
                             </notebook>
                         </group>
@@ -66,6 +117,21 @@
             </field>
         </record>
 
+        <record id="view_mc_maintenance_provided_search" model="ir.ui.view">
+            <field name="model">mc.maintenance</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="state"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" domain="[]" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
 
         <record id="action_mc_maintenance_received" model="ir.actions.act_window">
             <field name="name">Maintenance Received</field>
@@ -92,6 +158,33 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_mc_maintenance_received_form"/>
             <field name="act_window_id" ref="action_mc_maintenance_received"/>
+        </record>
+
+
+        <record id="action_mc_maintenance_provided" model="ir.actions.act_window">
+            <field name="name">Maintenance Provided</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.maintenance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('supplier', '=', False)]</field>
+            <field name="context">{'supplier' : False}</field>
+            <field name="search_view_id" ref="view_mc_maintenance_provided_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_mc_maintenance_provided_view_tree" model="ir.actions.act_window.view">
+            <field name="sequence">1</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_mc_maintenance_provided_tree"/>
+            <field name="act_window_id" ref="action_mc_maintenance_provided"/>
+        </record>
+
+        <record id="action_mc_maintenance_provided_view_form" model="ir.actions.act_window.view">
+            <field name="sequence">2</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_mc_maintenance_provided_form"/>
+            <field name="act_window_id" ref="action_mc_maintenance_provided"/>
         </record>
 
     </data>

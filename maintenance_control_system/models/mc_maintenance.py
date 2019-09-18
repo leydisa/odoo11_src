@@ -21,6 +21,16 @@ class McMaintenance(models.Model):
         date = fields.Date.from_string(fields.Date.today())
         return '{}-01-01'.format(date)
 
+    @api.one
+    @api.depends('line_ids')
+    def _compute_coste(self):
+        """
+        Calculate the current price of the material.
+        :return:
+        """
+        self.coste_cuc = sum([x.qty * x.equipment_id.total_cuc for x in self.line_ids])
+        self.coste_cup = sum([x.qty * x.equipment_id.total_cup for x in self.line_ids])
+
     code = fields.Char(string='Code',
                        required=True,
                        readonly=True,
@@ -42,10 +52,14 @@ class McMaintenance(models.Model):
                                  domain="[('supplier', '=', supplier)]")
     supplier = fields.Boolean(string='Is a Vendor',
                               default=lambda self: self.env.context.get('supplier') or False)
-
-    @api.onchange('partner_id')
-    def _onchange_partner_id(self):
-        self.contract_id = False
+    observation = fields.Text('Observation',
+                              required=True)
+    coste_cuc = fields.Float(string='Coste (CUC)',
+                             compute=_compute_coste,
+                             store=True)
+    coste_cup = fields.Float(string='Coste (CUP)',
+                             compute=_compute_coste,
+                             store=True)
 
     @api.one
     def action_finalized(self):
@@ -79,3 +93,6 @@ class McMaintenanceLine(models.Model):
                              related='equipment_id.total_cup',
                              readonly=True)
 
+    _sql_constraints = [
+        ('name_ref_uniq', 'unique (name, product_id)', 'The combination of serial number and product must be unique !'),
+    ]
