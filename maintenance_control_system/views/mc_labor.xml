@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- mc.labor views-->
+        <record id="view_mc_labor_tree" model="ir.ui.view">
+            <field name="name">view.mc.labor.tree</field>
+            <field name="model">mc.labor</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Material">
+                    <field name="coste_cuc"/>
+                    <field name="coste_cup"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_labor_form" model="ir.ui.view">
+            <field name="name">view.mc.labor.form</field>
+            <field name="model">mc.labor</field>
+            <field name="arch" type="xml">
+                <form string="Material">
+                    <sheet>
+                        <group>
+                            <field name="coste_cuc"/>
+                            <field name="coste_cup"/>
+                            <notebook colspan="2">
+                                <page string="Costes">
+                                    <field name="coste_ids" nolabel="1">
+                                        <tree editable="bottom">
+                                            <field name="date"/>
+                                            <field name="coste_cuc"/>
+                                            <field name="coste_cup"/>
+                                            <field name="labor_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_mc_labor" model="ir.actions.act_window">
+            <field name="name">Labor</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.labor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="filter" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

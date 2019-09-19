@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- mc.budget views-->
+        <record id="view_mc_labor_tree" model="ir.ui.view">
+            <field name="name">view.mc.budget.tree</field>
+            <field name="model">mc.budget</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Material">
+                    <field name="year"/>
+                    <field name="maintenance_budget_provided_cuc"/>
+                    <field name="maintenance_budget_provided_cuc"/>
+                    <field name="maintenance_budget_received_cuc"/>
+                    <field name="maintenance_budget_received_cup"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_budget_form" model="ir.ui.view">
+            <field name="name">view.mc.budget.form</field>
+            <field name="model">mc.budget</field>
+            <field name="arch" type="xml">
+                <form string="Material">
+                    <sheet>
+                        <group col="6">
+                            <field name="year" colspan="2"/>
+                            <separator colspan="4"/>
+                        </group>
+                        <group string="For Maintenance Provided" col="4">
+                            <field name="maintenance_budget_provided_cuc"/>
+                            <field name="maintenance_budget_provided_cup"/>
+                        </group>
+                        <group string="For Maintenance Received" col="4">
+                            <field name="maintenance_budget_received_cuc"/>
+                            <field name="maintenance_budget_received_cup"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_mc_budget" model="ir.actions.act_window">
+            <field name="name">Budget</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.budget</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="filter" eval="True"/>
+        </record>
+
+
+    </data>
+</odoo>

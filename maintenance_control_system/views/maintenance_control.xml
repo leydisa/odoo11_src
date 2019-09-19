@@ -12,15 +12,17 @@
         <menuitem id="menu_contract" parent="menu_maintenance_control" name="Contract" sequence="40"/>
             <menuitem id="menu_customer_contract" parent="menu_contract" name="Customer" sequence="10" action="action_mc_customer_contract"/>
             <menuitem id="menu_supplier_contract" parent="menu_contract" name="Supplier" sequence="20" action="action_mc_supplier_contract"/>
-        <menuitem id="menu_work_order" parent="menu_maintenance_control" name="Work Order" sequence="50" action="action_mc_work_order"/>
-        <menuitem id="menu_maintenance_received" parent="menu_maintenance_control" name="Maintenance Received" sequence="60" action="action_mc_maintenance_received"/>
-        <menuitem id="menu_maintenance_provided" parent="menu_maintenance_control" name="Maintenance Provided" sequence="70" action="action_mc_maintenance_provided"/>
+        <menuitem id="menu_budget" parent="menu_maintenance_control" name="Budget" sequence="50" action="action_mc_budget"/>
+        <menuitem id="menu_work_order" parent="menu_maintenance_control" name="Work Order" sequence="60" action="action_mc_work_order"/>
+        <menuitem id="menu_maintenance_received" parent="menu_maintenance_control" name="Maintenance Received" sequence="70" action="action_mc_maintenance_received"/>
+        <menuitem id="menu_maintenance_provided" parent="menu_maintenance_control" name="Maintenance Provided" sequence="80" action="action_mc_maintenance_provided"/>
 
         <menuitem id="menu_config" parent="menu_maintenance_control" name="Configurations" sequence="100"/>
             <menuitem id="menu_province" parent="menu_config" name="Provinces" sequence="10" action="action_mc_province"/>
             <menuitem id="menu_um" parent="menu_config" name="UM" sequence="20" action="action_mc_um"/>
             <menuitem id="menu_material" parent="menu_config" name="Material" sequence="30" action="action_mc_material"/>
         <menuitem id="menu_equipment" parent="menu_config" name="Equipment" sequence="40" action="action_mc_equipment"/>
+        <menuitem id="menu_labor" parent="menu_config" name="Labor" sequence="50" action="action_mc_labor"/>
 
     </data>
 </odoo>
