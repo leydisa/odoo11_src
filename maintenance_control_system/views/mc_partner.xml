@@ -3,24 +3,8 @@
     <data>
 
         <!-- mc.partner views-->
-        <record id="view_mc_customer_tree" model="ir.ui.view">
-            <field name="name">view.mc.customer.tree</field>
-            <field name="model">mc.partner</field>
-            <field eval="8" name="priority"/>
-            <field name="arch" type="xml">
-                <tree string="Contacts">
-                    <field name="code"/>
-                    <field name="name"/>
-                    <field name="date"/>
-                    <field name="type"/>
-                    <field name="phone"/>
-                    <field name="email"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_mc_supplier_tree" model="ir.ui.view">
-            <field name="name">view.mc.supplier.tree</field>
+        <record id="view_mc_partner_tree" model="ir.ui.view">
+            <field name="name">view.mc.partner.tree</field>
             <field name="model">mc.partner</field>
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
@@ -30,12 +14,13 @@
                     <field name="date"/>
                     <field name="phone"/>
                     <field name="email"/>
+                    <field name="active"/>
                 </tree>
             </field>
         </record>
 
-        <record id="view_mc_customer_partner_form" model="ir.ui.view">
-            <field name="name">view.mc.customer.partner.form</field>
+        <record id="view_mc_partner_form" model="ir.ui.view">
+            <field name="name">view.mc.partner.form</field>
             <field name="model">mc.partner</field>
             <field name="arch" type="xml">
                 <form string="Contact">
@@ -52,47 +37,27 @@
                             </h1>
                         </div>
                         <group col="4">
-                                <field name="code" colspan="2"/>
-                                <field name="date" colspan="2"/>
-                                <field name="type" widget="radio" attrs="{'required':[('supplier','=',False)], 'invisible': [('supplier', '=', True)]}" colspan="4"/>
+                            <field name="code" colspan="2"/>
+                            <field name="date" colspan="2"/>
+                            <field name="province_id" colspan="2" options="{'no_create': True, 'no_open': True}"/>
+                            <separator colspan="2"/>
                         </group>
-                        <group string="Contact Information">
-                            <group>
-                                <field name="phone"/>
-                            </group>
-                            <group>
-                                <field name="email" widget="email"/>
-                            </group>
-                        </group>
-
+                        <notebook>
+                            <page string="Contact Information">
+                                <group col="4">
+                                    <field name="phone" colspan="2"/>
+                                    <field name="email" colspan="2" widget="email"/>
+                                </group>
+                            </page>
+                        </notebook>
                         <field name="supplier" invisible="1"/>
+                        <field name="type" invisible="1"/>
                     </sheet>
                 </form>
             </field>
         </record>
 
-        <record id="view_mc_customer_search" model="ir.ui.view">
-            <field name="model">mc.partner</field>
-            <field name="arch" type="xml">
-                <search>
-                    <field name="code"/>
-                    <field name="name"/>
-                    <field name="date"/>
-                    <field name="type"/>
-                    <field name="phone"/>
-                    <field name="email"/>
-                    <separator/>
-                    <filter string="Active" name="all" domain="[('active', '=', True)]" />
-                    <filter string="Inactive" name="all" domain="[('active', '=', False)]" />
-                    <group expand="0" string="Group By">
-                        <filter string="State" domain="[]" context="{'group_by':'active'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>
-
-
-        <record id="view_mc_supplier_search" model="ir.ui.view">
+        <record id="view_mc_partner_search" model="ir.ui.view">
             <field name="model">mc.partner</field>
             <field name="arch" type="xml">
                 <search>
@@ -111,30 +76,26 @@
             </field>
         </record>
 
-        <record id="action_mc_partner_customer" model="ir.actions.act_window">
-            <field name="name">Customers</field>
+        <record id="action_mc_partner_internal_customer" model="ir.actions.act_window">
+            <field name="name">Internal Customers</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mc.partner</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('supplier', '=', False)]</field>
-            <field name="context">{'supplier' : False, 'tree_view_ref':'view_mc_customer_tree'}</field>
-            <field name="search_view_id" ref="view_mc_customer_search"/>
+            <field name="domain">[('supplier', '=', False), ('type', '=', 'internal')]</field>
+            <field name="context">{'supplier' : False, 'type': 'internal'}</field>
             <field name="filter" eval="True"/>
         </record>
 
-        <record id="action_mc_partner_supplier_view_tree" model="ir.actions.act_window.view">
-            <field name="sequence">1</field>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_mc_customer_tree"/>
-            <field name="act_window_id" ref="action_mc_partner_customer"/>
-        </record>
-
-        <record id="action_mc_partner_supplier_view_form" model="ir.actions.act_window.view">
-            <field name="sequence">2</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_mc_customer_partner_form"/>
-            <field name="act_window_id" ref="action_mc_partner_customer"/>
+        <record id="action_mc_partner_external_customer" model="ir.actions.act_window">
+            <field name="name">External Customers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('supplier', '=', False), ('type', '=', 'external')]</field>
+            <field name="context">{'supplier' : False, 'type': 'external'}</field>
+            <field name="filter" eval="True"/>
         </record>
 
         <record id="action_mc_partner_supplier" model="ir.actions.act_window">
@@ -144,23 +105,8 @@
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="domain">[('supplier', '=', True)]</field>
-            <field name="context">{'supplier' : True, 'tree_view_ref':'view_mc_supplier_tree'}</field>
-            <field name="search_view_id" ref="view_mc_supplier_search"/>
+            <field name="context">{'supplier' : True}</field>
             <field name="filter" eval="True"/>
-        </record>
-
-        <record id="action_mc_partner_supplier_view_tree" model="ir.actions.act_window.view">
-            <field name="sequence">1</field>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_mc_supplier_tree"/>
-            <field name="act_window_id" ref="action_mc_partner_supplier"/>
-        </record>
-
-        <record id="action_mc_partner_supplier_view_form" model="ir.actions.act_window.view">
-            <field name="sequence">2</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_mc_customer_partner_form"/>
-            <field name="act_window_id" ref="action_mc_partner_supplier"/>
         </record>
 
     </data>

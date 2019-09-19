@@ -3,10 +3,19 @@
     <data noupdate="0">
 
         <!-- mc_partner_sequence -->
-        <record id="sequence_mc_customer" model="ir.sequence">
-            <field name="name">MC Customer Sequence</field>
-            <field name="code">mc.customer.sequence</field>
-            <field name="prefix">CL</field>
+        <record id="sequence_mc_internal_customer" model="ir.sequence">
+            <field name="name">MC Internal Customer Sequence</field>
+            <field name="code">mc.internal.customer.sequence</field>
+            <field name="prefix">CLI</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">4</field>
+        </record>
+
+        <record id="sequence_mc_external_customer" model="ir.sequence">
+            <field name="name">MC External Customer Sequence</field>
+            <field name="code">mc.external.customer.sequence</field>
+            <field name="prefix">CLE</field>
             <field eval="1" name="number_next"/>
             <field eval="1" name="number_increment"/>
             <field name="padding">4</field>

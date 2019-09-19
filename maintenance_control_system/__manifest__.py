@@ -24,6 +24,8 @@
         'views/mc_nomenclator.xml',
         'views/mc_partner.xml',
         'views/mc_contract.xml',
+        'views/mc_material.xml',
+        'views/mc_equipement.xml',
         'views/mc_work_order.xml',
         'views/mc_maintenance.xml',
         'views/maintenance_control.xml',

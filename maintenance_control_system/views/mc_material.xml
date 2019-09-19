@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- mc.material views-->
+        <record id="view_mc_material_tree" model="ir.ui.view">
+            <field name="name">view.mc.material.tree</field>
+            <field name="model">mc.material</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Material">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="um"/>
+                    <field name="price_cuc"/>
+                    <field name="price_cup"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_material_form" model="ir.ui.view">
+            <field name="name">view.mc.material.form</field>
+            <field name="model">mc.material</field>
+            <field name="arch" type="xml">
+                <form string="Material">
+                    <sheet>
+                        <group col="6">
+                            <field name="name" colspan="4"/>
+                            <field name="date" colspan="2"/>
+                            <separator colspan="4"/>
+                            <field name="um" colspan="2"/>
+                            <field name="description" colspan="6"/>
+                            <field name="price_cuc" colspan="6"/>
+                            <field name="price_cup" colspan="6"/>
+                            <notebook colspan="6">
+                                <page string="Prices">
+                                    <field name="price_ids" colspan="6" nolabel="1">
+                                        <tree editable="bottom">
+                                            <field name="date"/>
+                                            <field name="price_cuc"/>
+                                            <field name="price_cup"/>
+                                            <field name="observation"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_mc_material" model="ir.actions.act_window">
+            <field name="name">Material</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.material</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="filter" eval="True"/>
+        </record>
+
+
+    </data>
+</odoo>

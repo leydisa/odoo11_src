@@ -20,28 +20,31 @@ class McPartner(models.Model):
         return '{}-01-01'.format(date)
 
     code = fields.Char(string='Code',
-                       required=True,
                        readonly=True,
                        default=_('New'))
+    name = fields.Char(index=True,
+                       required=True)
+    image = fields.Binary("Image",
+                          attachment=True,
+                          help="This field holds the image used as avatar for this contact, limited to 1024x1024px")
     date = fields.Date(string='Creation Date',
                        required=True,
                        index=True,
                        default=_get_default_date)
+    province_id = fields.Many2one('mc.province',
+                                  required=True,
+                                  ondelete='restrict')
     email = fields.Char(string='Email',
                         required=True)
-    image = fields.Binary("Image",
-                          attachment=True,
-                          help="This field holds the image used as avatar for this contact, limited to 1024x1024px")
-    name = fields.Char(index=True,
-                       required=True)
     phone = fields.Char(string='Phone',
                         required=True)
-    active = fields.Boolean(default=True)
     supplier = fields.Boolean(string='Is a Vendor',
                               default=lambda self: self.env.context.get('supplier') or False)
     type = fields.Selection([('internal', 'Internal'),
                              ('external', 'External')],
-                            string='Type')
+                            string='Type',
+                            default=lambda self: self.env.context.get('type') or False)
+    active = fields.Boolean(default=True)
 
     _sql_constraints = [
         ('name_uniq', 'unique(name)', 'Name must be unique!'),
@@ -57,7 +60,8 @@ class McPartner(models.Model):
         if vals['supplier']:
             vals['code'] = self.env['ir.sequence'].next_by_code('mc.supplier.sequence')
         else:
-            vals['code'] = self.env['ir.sequence'].next_by_code('mc.customer.sequence')
+            sequence = 'mc.%s.customer.sequence' % vals['type']
+            vals['code'] = self.env['ir.sequence'].next_by_code(sequence)
         return super(McPartner, self).create(vals)
 
 

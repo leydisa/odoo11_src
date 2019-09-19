@@ -37,9 +37,9 @@ class McContract(models.Model):
     filename = fields.Char('File Name',
                            required=True)
     partner_id = fields.Many2one('mc.partner',
-                                 string='Customer',
-                                 required=True,
-                                 domain="[('supplier', '=', False)]")
+                                 required=True)
+    supplier = fields.Boolean(string='Is a Vendor',
+                              default=lambda self: self.env.context.get('supplier') or False)
 
     @api.one
     def action_finalized(self):

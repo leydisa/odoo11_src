@@ -4,20 +4,23 @@
 
         <!-- MENU -->
         <menuitem id="menu_maintenance_control" name="Maintenance Control"/>
-            <menuitem id="menu_report" parent="menu_maintenance_control" name="Reports" sequence="10" action="action_mc_partner_customer"/>
-        <menuitem id="menu_customer" parent="menu_maintenance_control" name="Customer" sequence="20" action="action_mc_partner_customer"/>
+            <menuitem id="menu_report" parent="menu_maintenance_control" name="Reports" sequence="10"/>
+        <menuitem id="menu_customer" parent="menu_maintenance_control" name="Customer" sequence="20"/>
+            <menuitem id="menu_internal_customer" parent="menu_customer" name="Internal" sequence="10" action="action_mc_partner_internal_customer"/>
+            <menuitem id="menu_external_customer" parent="menu_customer" name="External" sequence="20" action="action_mc_partner_external_customer"/>
         <menuitem id="menu_supplier" parent="menu_maintenance_control" name="Supplier" sequence="30" action="action_mc_partner_supplier"/>
-        <menuitem id="menu_contract" parent="menu_maintenance_control" name="Contract" sequence="40" action="action_mc_contract"/>
+        <menuitem id="menu_contract" parent="menu_maintenance_control" name="Contract" sequence="40"/>
+            <menuitem id="menu_customer_contract" parent="menu_contract" name="Customer" sequence="10" action="action_mc_customer_contract"/>
+            <menuitem id="menu_supplier_contract" parent="menu_contract" name="Supplier" sequence="20" action="action_mc_supplier_contract"/>
         <menuitem id="menu_work_order" parent="menu_maintenance_control" name="Work Order" sequence="50" action="action_mc_work_order"/>
         <menuitem id="menu_maintenance_received" parent="menu_maintenance_control" name="Maintenance Received" sequence="60" action="action_mc_maintenance_received"/>
         <menuitem id="menu_maintenance_provided" parent="menu_maintenance_control" name="Maintenance Provided" sequence="70" action="action_mc_maintenance_provided"/>
 
         <menuitem id="menu_config" parent="menu_maintenance_control" name="Configurations" sequence="100"/>
             <menuitem id="menu_province" parent="menu_config" name="Provinces" sequence="10" action="action_mc_province"/>
-            <menuitem id="menu_entity" parent="menu_config" name="Entities" sequence="20" action="action_mc_entity"/>
-            <menuitem id="menu_um" parent="menu_config" name="UM" sequence="30" action="action_mc_um"/>
-            <menuitem id="menu_material" parent="menu_config" name="Material" sequence="40" action="action_mc_material"/>
-        <menuitem id="menu_equipment" parent="menu_config" name="Equipment" sequence="50" action="action_mc_equipment"/>
+            <menuitem id="menu_um" parent="menu_config" name="UM" sequence="20" action="action_mc_um"/>
+            <menuitem id="menu_material" parent="menu_config" name="Material" sequence="30" action="action_mc_material"/>
+        <menuitem id="menu_equipment" parent="menu_config" name="Equipment" sequence="40" action="action_mc_equipment"/>
 
     </data>
 </odoo>
