@@ -50,7 +50,7 @@
                             <field name="date" colspan="4"/>
                             <separator colspan="2"/>
                             <field name="expiration_date" colspan="4"/>
-                            <field name="partner_id" colspan="6" string="Customer" domain="[('supplier', '=', False), ('type', '=', 'external')]"/>
+                            <field name="partner_id" colspan="6" string="Customer" domain="[('supplier', '=', False), ('type', '=', 'external')]" options="{'no_create': True, 'no_open': True}"/>
                             <field name="description" colspan="6"/>
                             <field name="file" filename="filename" colspan="6"/>
                             <field name="supplier" invisible="1"/>
@@ -75,7 +75,7 @@
                             <field name="date" colspan="4"/>
                             <separator colspan="2"/>
                             <field name="expiration_date" colspan="4"/>
-                            <field name="partner_id" colspan="6" string="Supplier" domain="[('supplier', '=', True)]"/>
+                            <field name="partner_id" colspan="6" string="Supplier" domain="[('supplier', '=', True)]" options="{'no_create': True, 'no_open': True}"/>
                             <field name="description" colspan="6"/>
                             <field name="file" filename="filename" colspan="6"/>
                         </group>

@@ -35,31 +35,45 @@ class McMaintenance(models.Model):
                        required=True,
                        readonly=True,
                        default=_('New'))
-    contract_id = fields.Many2one('mc.contract',
-                                  string='Contract',
-                                  required=True,
-                                  domain="[('partner_id', '=', partner_id)]")
     date = fields.Date(string='Creation Date',
                        required=True,
                        index=True,
                        default=_get_default_date)
-
-    line_ids = fields.One2many('mc.maintenance.line', 'maintenance_id',
-                               string='Lines')
     partner_id = fields.Many2one('mc.partner',
-                                 string='Customer',
-                                 required=True,
-                                 domain="[('supplier', '=', supplier)]")
+                                 required=True)
+    contract_id = fields.Many2one('mc.contract',
+                                  string='Contract',
+                                  domain="[('partner_id', '=', partner_id), "
+                                         "('state', '=', 'finalized')]")
+    province_id = fields.Many2one(string='Province',
+                                  related='partner_id.province_id',
+                                  readonly=True)
+    entity_id = fields.Many2one('mc.partner',
+                                string='Entidad',
+                                domain="[('supplier', '=', False), "
+                                       "('type', '=', 'internal')]")
     supplier = fields.Boolean(string='Is a Vendor',
                               default=lambda self: self.env.context.get('supplier') or False)
+    type = fields.Selection([('internal', 'Internal'),
+                             ('external', 'External')],
+                            string='Type',
+                            default=lambda self: self.env.context.get('type') or False)
     observation = fields.Text('Observation',
                               required=True)
+    invoice = fields.Binary(string='Invoice')
+    invoice_filename = fields.Char('Invoice')
+    line_ids = fields.One2many('mc.maintenance.line', 'maintenance_id',
+                               string='Lines')
     coste_cuc = fields.Float(string='Coste (CUC)',
                              compute=_compute_coste,
                              store=True)
     coste_cup = fields.Float(string='Coste (CUP)',
                              compute=_compute_coste,
                              store=True)
+
+    @api.onchange('partner_id')
+    def _onchange_partner_id(self):
+        self.contract_id = False
 
     @api.one
     def action_finalized(self):

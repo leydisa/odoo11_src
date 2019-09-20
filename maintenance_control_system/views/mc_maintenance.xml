@@ -11,8 +11,9 @@
                 <tree string="Contacts">
                     <field name="code"/>
                     <field name="date"/>
-                    <field name="partner_id"/>
-                    <!--                    <field name="state"/>-->
+                    <field name="partner_id" string="Supplier"/>
+                    <field name="contract_id"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -44,7 +45,16 @@
                         <group col="4">
                             <field name="code" colspan="2"/>
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <hr colspan="4"/>
+                            <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}" required="1"/>
+                            <hr colspan="4"/>
+                            <field name="partner_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}" domain="[('supplier', '=', True)]" string="Supplier" required="1"/>
+                            <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" required="1"/>
+                            <field name="province_id" colspan="2"/>
+                            <hr colspan="4"/>
+                            <separator colspan="2"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="invoice" filename="invoice_filename" colspan="4"/>
                             <notebook colspan="4">
                                 <page string="Lines">
                                     <field name="line_ids" nolabel="1" attrs="{'readonly': [('state','=', 'finalized')]}">
