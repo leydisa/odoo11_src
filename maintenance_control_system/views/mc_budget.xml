@@ -24,9 +24,12 @@
             <field name="arch" type="xml">
                 <form string="Material">
                     <sheet>
-                        <group col="6">
-                            <field name="year" colspan="2"/>
-                            <separator colspan="4"/>
+                        <group>
+                            <group>
+                                <field name="year"/>
+                            </group>
+                            <group/>
+                            <group/>
                         </group>
                         <group string="For Maintenance Provided" col="4">
                             <field name="maintenance_budget_provided_cuc"/>

@@ -60,10 +60,19 @@
             <field name="padding">3</field>
         </record>
 
-        <record id="sequence_maintenance_provided_order" model="ir.sequence">
-            <field name="name">Maintenance Provided Sequence</field>
-            <field name="code">mc.maintenance.provided.sequence</field>
-            <field name="prefix">MR/%(year)s/</field>
+        <record id="sequence_internal_maintenance_provided_order" model="ir.sequence">
+            <field name="name">Internal Maintenance Provided Sequence</field>
+            <field name="code">mc.internal.maintenance.provided.sequence</field>
+            <field name="prefix">MBI/%(year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">3</field>
+        </record>
+
+        <record id="sequence_external_maintenance_provided_order" model="ir.sequence">
+            <field name="name">External Maintenance Provided Sequence</field>
+            <field name="code">mc.external.maintenance.provided.sequence</field>
+            <field name="prefix">MBE/%(year)s/</field>
             <field eval="1" name="number_next"/>
             <field eval="1" name="number_increment"/>
             <field name="padding">3</field>

@@ -27,8 +27,9 @@ class McWorkOrder(models.Model):
                        default=_('New'))
     contract_id = fields.Many2one('mc.contract',
                                   string='Contract',
-                                  required=True,
-                                  domain="[('partner_id', '=', partner_id)]")
+                                  related='maintenance_id.contract_id',
+                                  readonly=True,
+                                  store=True)
     date = fields.Date(string='Creation Date',
                        required=True,
                        index=True,
@@ -39,12 +40,12 @@ class McWorkOrder(models.Model):
                                string='Lines')
     partner_id = fields.Many2one('mc.partner',
                                  string='Customer',
-                                 required=True,
-                                 domain="[('supplier', '=', False)]")
-
-    @api.onchange('partner_id')
-    def _onchange_partner_id(self):
-        self.contract_id = False
+                                 related='maintenance_id.partner_id',
+                                 readonly=True,
+                                 store=True)
+    maintenance_id = fields.Many2one('mc.maintenance',
+                                     string='Maintenance',
+                                     domain="[('supplier', '=', False), ('type', '=', 'external')]")
 
     @api.one
     def action_finalized(self):

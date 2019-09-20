@@ -15,7 +15,9 @@
         <menuitem id="menu_budget" parent="menu_maintenance_control" name="Budget" sequence="50" action="action_mc_budget"/>
         <menuitem id="menu_work_order" parent="menu_maintenance_control" name="Work Order" sequence="60" action="action_mc_work_order"/>
         <menuitem id="menu_maintenance_received" parent="menu_maintenance_control" name="Maintenance Received" sequence="70" action="action_mc_maintenance_received"/>
-        <menuitem id="menu_maintenance_provided" parent="menu_maintenance_control" name="Maintenance Provided" sequence="80" action="action_mc_maintenance_provided"/>
+        <menuitem id="menu_maintenance_provided" parent="menu_maintenance_control" name="Maintenance Provided" sequence="80"/>
+            <menuitem id="menu_internal_maintenance_provided" parent="menu_maintenance_provided" name="Internal" sequence="10" action="action_mc_internal_maintenance_provided"/>
+            <menuitem id="menu_external_maintenance_provided" parent="menu_maintenance_provided" name="External" sequence="10" action="action_mc_external_maintenance_provided"/>
 
         <menuitem id="menu_config" parent="menu_maintenance_control" name="Configurations" sequence="100"/>
             <menuitem id="menu_province" parent="menu_config" name="Provinces" sequence="10" action="action_mc_province"/>

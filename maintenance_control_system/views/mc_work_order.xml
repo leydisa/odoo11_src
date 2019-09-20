@@ -28,8 +28,10 @@
                     <group col="4">
                         <field name="code" colspan="2"/>
                         <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                        <field name="partner_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                        <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                        <field name="maintenance_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                        <separator colspan="2"/>
+                        <field name="partner_id" colspan="2"/>
+                        <field name="contract_id" colspan="2"/>
                         <field name="file" filename="filename" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                         <field name="filename" invisible="1"/>
                         <notebook colspan="4">

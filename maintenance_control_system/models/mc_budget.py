@@ -17,6 +17,7 @@ class McBudget(models.Model):
     """
     _description = 'Annual Budget'
     _name = "mc.budget"
+    _rec_name = "year"
 
     def _get_default_year(self):
         """

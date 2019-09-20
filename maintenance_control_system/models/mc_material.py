@@ -20,16 +20,16 @@ class McMaterial(models.Model):
         return '{}-01-01'.format(date)
 
     @api.one
-    @api.depends('price_ids')
-    def _compute_current_price(self):
+    @api.depends('coste_ids')
+    def _compute_current_coste(self):
         """
         Calculate the current price of the material.
         :return:
         """
-        if len(self.price_ids) > 0:
-            self.price_id = self.price_ids.sorted(key='date')[-1]
+        if len(self.coste_ids) > 0:
+            self.coste_id = self.coste_ids.sorted(key='date')[-1]
         else:
-            self.price_id = False
+            self.coste_id = False
 
     date = fields.Date(string='Date',
                        required=True,
@@ -37,17 +37,17 @@ class McMaterial(models.Model):
     description = fields.Text(string="Description")
     name = fields.Char(string='Name',
                        required=True)
-    price_cuc = fields.Float(string='Current Price(CUC)',
-                             related='price_id.price_cuc',
+    coste_cuc = fields.Float(string='CUC',
+                             related='coste_id.coste_cuc',
                              readonly=True)
-    price_cup = fields.Float(string='Current Price(CUP)',
-                             related='price_id.price_cup',
+    coste_cup = fields.Float(string='CUP',
+                             related='coste_id.coste_cup',
                              readonly=True)
-    price_id = fields.Many2one('mc.material.price.trace',
+    coste_id = fields.Many2one('mc.material.coste',
                                string='Price',
-                               compute=_compute_current_price,
+                               compute=_compute_current_coste,
                                store=True)
-    price_ids = fields.One2many('mc.material.price.trace', 'material_id',
+    coste_ids = fields.One2many('mc.material.coste', 'material_id',
                                 string='Prices',
                                 required=True)
     um = fields.Many2one('um',
@@ -55,12 +55,12 @@ class McMaterial(models.Model):
                          required=True)
 
 
-class McMaterialPriceTrace(models.Model):
+class McMaterialCoste(models.Model):
     """
     Class that represent Material.
     """
-    _description = 'Price of Material'
-    _name = "mc.material.price.trace"
+    _description = 'Coste of Material'
+    _name = "mc.material.coste"
 
     def _get_default_date(self):
         """
@@ -76,13 +76,13 @@ class McMaterialPriceTrace(models.Model):
                                   ondelete='restrict')
     observation = fields.Text('Observation',
                               required=True)
-    price_cuc = fields.Float(string='Price(CUC)',
+    coste_cuc = fields.Float(string='CUC',
                              required=True)
-    price_cup = fields.Float(string='Price(CUP)',
+    coste_cup = fields.Float(string='CUP',
                              required=True)
 
     _sql_constraints = [
-        ('price_zero', 'CHECK (price_cuc > 0 and price_cup > 0)',
+        ('coste_zero', 'CHECK (coste_cuc > 0 and coste_cup > 0)',
          'The price must be greater than 0.'),
         ('date_unique', 'unique (material_id, date)',
          'Repeated date!'),

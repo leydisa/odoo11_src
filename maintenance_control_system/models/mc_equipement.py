@@ -20,14 +20,14 @@ class McEquipment(models.Model):
         return '{}-01-01'.format(date)
 
     @api.one
-    @api.depends('material_expense_ids')
-    def _compute_total(self):
+    @api.depends('material_ids')
+    def _compute_coste(self):
         """
-        Calculate the current price of the material.
+        Calculate the current coste of the material.
         :return:
         """
-        self.total_cuc = sum([x.price_cuc * x.factor for x in self.material_expense_ids])
-        self.total_cup = sum([x.price_cup * x.factor for x in self.material_expense_ids])
+        self.coste_cuc = sum([x.coste_cuc * x.factor for x in self.material_ids])
+        self.coste_cup = sum([x.coste_cup * x.factor for x in self.material_ids])
 
     date = fields.Date(string='Date',
                        required=True,
@@ -35,28 +35,28 @@ class McEquipment(models.Model):
     description = fields.Text(string="Description")
     name = fields.Char(string='Name',
                        required=True)
-    material_expense_ids = fields.One2many('mc.equipment.material.expense', 'equipment_id',
-                                           string='Material Expenditure Per Equipment')
-    total_cuc = fields.Float(string='Total (CUC)',
-                             compute=_compute_total,
+    material_ids = fields.One2many('mc.equipment.material', 'equipment_id',
+                                   string='Material Expenditure Per Equipment')
+    coste_cuc = fields.Float(string='CUC',
+                             compute=_compute_coste,
                              store=True)
-    total_cup = fields.Float(string='Total (CUP)',
-                             compute=_compute_total,
+    coste_cup = fields.Float(string='CUP',
+                             compute=_compute_coste,
                              store=True)
 
 
-class McEquipmentMaterialExpense(models.Model):
+class McEquipmentMaterial(models.Model):
     """
     Class that represent material expenditure per equipment.
     """
     _description = 'Material expenditure per equipment'
-    _name = "mc.equipment.material.expense"
+    _name = "mc.equipment.material"
 
     @api.one
     @api.depends('factor_ids')
     def _compute_current_factor(self):
         """
-        Calculate the current price of the material.
+        Calculate the current coste of the material.
         :return:
         """
         if len(self.factor_ids) > 0:
@@ -72,16 +72,16 @@ class McEquipmentMaterialExpense(models.Model):
                                  string='Trace Factor',
                                 compute=_compute_current_factor,
                                 store=True)
-    factor_ids = fields.One2many('mc.equipment.material.factor', 'expense_id',
+    factor_ids = fields.One2many('mc.equipment.material.factor', 'parent_id',
                                  string='Factor Trace',
                                  required=True)
     material_id = fields.Many2one('mc.material',
                                   string='Material',
                                   required=True)
-    price_cuc = fields.Float(string='Price(CUC)',
-                             related='material_id.price_cuc')
-    price_cup = fields.Float(string='Price(CUP)',
-                             related='material_id.price_cup')
+    coste_cuc = fields.Float(string='CUC',
+                             related='material_id.coste_cuc')
+    coste_cup = fields.Float(string='CUP',
+                             related='material_id.coste_cup')
 
     _sql_constraints = [
         ('material_uniq', 'unique (equipment_id, material_id)',
@@ -106,13 +106,13 @@ class McEquipmentMaterialFactor(models.Model):
     date = fields.Date(string='Date',
                        required=True,
                        default=_get_default_date)
-    expense_id = fields.Many2one('mc.equipment.material.expense',
+    parent_id = fields.Many2one('mc.equipment.material',
                                  ondelete='restrict')
     factor = fields.Float(string='Factor')
     observation = fields.Text('Observation',
                               required=True)
 
     _sql_constraints = [
-        ('date_uniq', 'unique (expense_id, date)',
+        ('date_uniq', 'unique (parent_id, date)',
          'Repeated date.!')
     ]

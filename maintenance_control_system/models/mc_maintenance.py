@@ -28,8 +28,8 @@ class McMaintenance(models.Model):
         Calculate the current price of the material.
         :return:
         """
-        self.coste_cuc = sum([x.qty * x.equipment_id.total_cuc for x in self.line_ids])
-        self.coste_cup = sum([x.qty * x.equipment_id.total_cup for x in self.line_ids])
+        self.coste_cuc = sum([x.qty * x.equipment_id.coste_cuc for x in self.line_ids])
+        self.coste_cup = sum([x.qty * x.equipment_id.coste_cup for x in self.line_ids])
 
     code = fields.Char(string='Code',
                        required=True,
@@ -39,8 +39,7 @@ class McMaintenance(models.Model):
                        required=True,
                        index=True,
                        default=_get_default_date)
-    partner_id = fields.Many2one('mc.partner',
-                                 required=True)
+    partner_id = fields.Many2one('mc.partner')
     contract_id = fields.Many2one('mc.contract',
                                   string='Contract',
                                   domain="[('partner_id', '=', partner_id), "
@@ -64,12 +63,15 @@ class McMaintenance(models.Model):
     invoice_filename = fields.Char('Invoice')
     line_ids = fields.One2many('mc.maintenance.line', 'maintenance_id',
                                string='Lines')
-    coste_cuc = fields.Float(string='Coste (CUC)',
+    coste_cuc = fields.Float(string='CUC',
                              compute=_compute_coste,
                              store=True)
-    coste_cup = fields.Float(string='Coste (CUP)',
+    coste_cup = fields.Float(string='CUP',
                              compute=_compute_coste,
                              store=True)
+    workorder_id = fields.Many2one('mc.work.order',
+                                   'Work Order',
+                                   readonly=True)
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):
@@ -84,7 +86,7 @@ class McMaintenance(models.Model):
         if self.supplier:
             self.code = self.env['ir.sequence'].next_by_code('mc.maintenance.received.sequence')
         else:
-            self.code = self.env['ir.sequence'].next_by_code('mc.maintenance.provided.sequence')
+            self.code = self.env['ir.sequence'].next_by_code('mc.%s.maintenance.provided.sequence' % self.type)
         return super(McMaintenance, self).action_finalized()
 
 
@@ -100,11 +102,11 @@ class McMaintenanceLine(models.Model):
     equipment_id = fields.Many2one('mc.equipment',
                                    required=True)
     qty = fields.Integer(string='Quantity')
-    total_cuc = fields.Float(string='Current Price(CUC)',
-                             related='equipment_id.total_cuc',
+    coste_cuc = fields.Float(string='CUC)',
+                             related='equipment_id.coste_cuc',
                              readonly=True)
-    total_cup = fields.Float(string='Current Price(CUP)',
-                             related='equipment_id.total_cup',
+    coste_cup = fields.Float(string='CUP',
+                             related='equipment_id.coste_cup',
                              readonly=True)
 
     _sql_constraints = [

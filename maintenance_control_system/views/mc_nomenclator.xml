@@ -58,85 +58,7 @@
             </field>
         </record>
 
-        <!-- mc.equipement views-->
-        <record id="view_mc_equipment_tree" model="ir.ui.view">
-            <field name="name">view.mc.equipment.tree</field>
-            <field name="model">mc.equipment</field>
-            <field eval="8" name="priority"/>
-            <field name="arch" type="xml">
-                <tree string="Equipment">
-                    <field name="name"/>
-                    <field name="date"/>
-                    <field name="description"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_mc_equipment_form" model="ir.ui.view">
-            <field name="name">view.mc.equipment.form</field>
-            <field name="model">mc.equipment</field>
-            <field name="arch" type="xml">
-                <form string="Material">
-                    <sheet>
-                        <group col="6">
-                            <field name="name" colspan="4"/>
-                            <field name="date" colspan="2"/>
-                            <field name="description" colspan="6"/>
-                            <notebook colspan="6">
-                                <page string="Material Expenditure Per Equipment">
-                                    <field name="material_expense_ids" colspan="6" nolabel="1">
-                                        <tree>
-                                            <field name="material_id"/>
-                                            <field name="price_cuc"/>
-                                            <field name="price_cup"/>
-                                            <field name="factor"/>
-                                        </tree>
-                                    </field>
-                                    <group class="oe_subtotal_footer oe_right">
-                                        <field name="total_cuc"/>
-                                        <field name="total_cup"/>
-                                    </group>
-                                </page>
-                            </notebook>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
-        <record id="view_mc_equipment_material_expense_form" model="ir.ui.view">
-            <field name="name">view.mc.equipment.material.expense.form</field>
-            <field name="model">mc.equipment.material.expense</field>
-            <field name="arch" type="xml">
-                <form string="Equipment Material Expense">
-                    <sheet>
-                        <group>
-                            <field name="material_id"/>
-                            <field name="price_cuc"/>
-                            <field name="price_cup"/>
-                            <field name="factor"/>
-                            <field name="factor_id" invisible="1"/>
-                        </group>
-                        <group>
-                            <notebook colspan="2">
-                                <page string="Trace Factor">
-                                    <field name="factor_ids" nolabel="1">
-                                        <tree editable="bottom">
-                                            <field name="date"/>
-                                            <field name="factor"/>
-                                            <field name="observation"/>
-                                            <field name="expense_id" invisible="1"/>
-                                        </tree>
-                                    </field>
-                                </page>
-                            </notebook>
-                            <field name="equipment_id" invisible="1"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
+        <!-- actions-->
         <record id="action_mc_province" model="ir.actions.act_window">
             <field name="name">Province</field>
             <field name="type">ir.actions.act_window</field>
@@ -150,15 +72,6 @@
             <field name="name">UM</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">um</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="filter" eval="True"/>
-        </record>
-
-        <record id="action_mc_equipment" model="ir.actions.act_window">
-            <field name="name">Equipment</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">mc.equipment</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="filter" eval="True"/>

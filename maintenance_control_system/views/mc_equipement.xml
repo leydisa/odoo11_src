@@ -26,38 +26,40 @@
                             <field name="name" colspan="4"/>
                             <field name="date" colspan="2"/>
                             <field name="description" colspan="6"/>
-                            <notebook colspan="6">
-                                <page string="Material Expenditure Per Equipment">
-                                    <field name="material_expense_ids" colspan="6" nolabel="1">
-                                        <tree>
-                                            <field name="material_id"/>
-                                            <field name="price_cuc"/>
-                                            <field name="price_cup"/>
-                                            <field name="factor"/>
-                                        </tree>
-                                    </field>
-                                    <group class="oe_subtotal_footer oe_right">
-                                        <field name="total_cuc"/>
-                                        <field name="total_cup"/>
-                                    </group>
-                                </page>
-                            </notebook>
                         </group>
+                        <group string="Current Costs">
+                            <field name="coste_cuc"/>
+                            <field name="coste_cup"/>
+                        </group>
+                        <notebook colspan="6">
+                            <page string="Material Expenditure Per Equipment">
+                                <field name="material_ids" colspan="6" nolabel="1">
+                                    <tree>
+                                        <field name="material_id"/>
+                                        <field name="coste_cuc"/>
+                                        <field name="coste_cup"/>
+                                        <field name="factor"/>
+                                        <field name="equipment_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+
                     </sheet>
                 </form>
             </field>
         </record>
 
-        <record id="view_mc_equipment_material_expense_form" model="ir.ui.view">
-            <field name="name">view.mc.equipment.material.expense.form</field>
-            <field name="model">mc.equipment.material.expense</field>
+        <record id="view_mc_equipment_material_form" model="ir.ui.view">
+            <field name="name">view.mc.equipment.material.form</field>
+            <field name="model">mc.equipment.material</field>
             <field name="arch" type="xml">
                 <form string="Equipment Material Expense">
                     <sheet>
                         <group>
                             <field name="material_id"/>
-                            <field name="price_cuc"/>
-                            <field name="price_cup"/>
+                            <field name="coste_cuc"/>
+                            <field name="coste_cup"/>
                             <field name="factor"/>
                             <field name="factor_id" invisible="1"/>
                         </group>
@@ -69,7 +71,7 @@
                                             <field name="date"/>
                                             <field name="factor"/>
                                             <field name="observation"/>
-                                            <field name="expense_id" invisible="1"/>
+                                            <field name="parent_id" invisible="1"/>
                                         </tree>
                                     </field>
                                 </page>
