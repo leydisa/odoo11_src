@@ -59,6 +59,8 @@
                         <group col="4">
                             <field name="code" colspan="2"/>
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_start" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
                             <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}'/>
                             <hr colspan="4"/>
@@ -103,6 +105,8 @@
                         <group col="4">
                             <field name="code" colspan="2"/>
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_start" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
                             <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}'/>
                             <hr colspan="4"/>
@@ -142,6 +146,8 @@
                         <group col="4">
                             <field name="code" colspan="2"/>
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_start" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
                             <field name="partner_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}" domain="[('supplier', '=', False), ('type', '=', 'external')]" string="Customer" required="1" options='{"no_open": True, "no_create": True}'/>
                             <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}'/>

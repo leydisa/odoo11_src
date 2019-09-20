@@ -9,6 +9,7 @@
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
                 <tree string="Material">
+                    <field name="date"/>
                     <field name="coste_cuc"/>
                     <field name="coste_cup"/>
                 </tree>
@@ -22,20 +23,9 @@
                 <form string="Material">
                     <sheet>
                         <group>
+                            <field name="date"/>
                             <field name="coste_cuc"/>
                             <field name="coste_cup"/>
-                            <notebook colspan="2">
-                                <page string="Costes">
-                                    <field name="coste_ids" nolabel="1">
-                                        <tree editable="bottom">
-                                            <field name="date"/>
-                                            <field name="coste_cuc"/>
-                                            <field name="coste_cup"/>
-                                            <field name="labor_id" invisible="1"/>
-                                        </tree>
-                                    </field>
-                                </page>
-                            </notebook>
                         </group>
                     </sheet>
                 </form>

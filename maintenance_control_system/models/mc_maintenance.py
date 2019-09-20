@@ -39,6 +39,10 @@ class McMaintenance(models.Model):
                        required=True,
                        index=True,
                        default=_get_default_date)
+    datetime_start = fields.Datetime(string="",
+                                     required=True)
+    datetime_stop = fields.Datetime(string="",
+                                    required=True)
     partner_id = fields.Many2one('mc.partner')
     contract_id = fields.Many2one('mc.contract',
                                   string='Contract',
