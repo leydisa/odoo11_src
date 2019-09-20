@@ -3,6 +3,7 @@
 
 
 from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class McMaintenance(models.Model):
@@ -30,6 +31,11 @@ class McMaintenance(models.Model):
         """
         self.coste_cuc = sum([x.qty * x.equipment_id.coste_cuc for x in self.line_ids])
         self.coste_cup = sum([x.qty * x.equipment_id.coste_cup for x in self.line_ids])
+
+    @api.constrains('datetime_start', 'datetime_stop')
+    def _check_dates(self):
+        if (fields.Datetime.from_string(self.datetime_start) >= fields.Datetime.from_string(self.datetime_stop)):
+            raise ValidationError(_('Contract start date must be less than contract end date.'))
 
     code = fields.Char(string='Code',
                        required=True,
