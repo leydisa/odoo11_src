@@ -22,18 +22,33 @@ class McMaintenance(models.Model):
         date = fields.Date.from_string(fields.Date.today())
         return '{}-01-01'.format(date)
 
+    @api.model
+    def _default_current_labor_coste(self):
+        """
+        Calculate the current price of labor.
+        :return:
+        """
+        labor = self.env['mc.labor'].search([], limit=1, order='date desc')
+        if len(labor) == 0:
+            raise ValidationError(_('Define the cost of labor.'))
+        else:
+            return labor
+
     @api.one
-    @api.depends('line_ids')
+    @api.depends('line_ids', 'labor_hours', 'labor_days')
     def _compute_coste(self):
         """
         Calculate the current price of the material.
         :return:
         """
         self.coste_cuc = sum([x.qty * x.equipment_id.coste_cuc for x in self.line_ids])
+        self.coste_cuc += self.labor_days * self.labor_hours * self.labor_id.coste_cuc
         self.coste_cup = sum([x.qty * x.equipment_id.coste_cup for x in self.line_ids])
+        self.coste_cup += self.labor_days * self.labor_hours * self.labor_id.coste_cup
+        self.mt = self.coste_cuc + self.coste_cup
 
     @api.constrains('datetime_start', 'datetime_stop')
-    def _check_dates(self):
+    def _check_data(self):
         if (fields.Datetime.from_string(self.datetime_start) >= fields.Datetime.from_string(self.datetime_stop)):
             raise ValidationError(_('Contract start date must be less than contract end date.'))
 
@@ -79,9 +94,25 @@ class McMaintenance(models.Model):
     coste_cup = fields.Float(string='CUP',
                              compute=_compute_coste,
                              store=True)
+    mt = fields.Float(string='MT',
+                      compute=_compute_coste,
+                      store=True)
     workorder_id = fields.Many2one('mc.work.order',
                                    'Work Order',
                                    readonly=True)
+    labor_id = fields.Many2one('mc.labor',
+                               string="Labor",
+                               default=_default_current_labor_coste,
+                               ondelete='restrict')
+    labor_days = fields.Float('Worked Days',
+                              required=True)
+    labor_hours = fields.Float('Hours Worked per Day',
+                               required=True)
+
+    _sql_constraints = [
+        ('labor_days_zero', 'CHECK (labor_days)', 'The labor days must be greater than 0.'),
+        ('labor_hours_zero', 'CHECK (labor_hours)', 'The labor hours must be greater than 0.'),
+    ]
 
     @api.onchange('partner_id')
     def _onchange_partner_id(self):

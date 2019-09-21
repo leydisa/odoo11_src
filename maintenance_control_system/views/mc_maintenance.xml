@@ -52,41 +52,56 @@
             <field name="arch" type="xml">
                 <form string="Work Order">
                     <header>
-                        <button name="action_finalized" states="edition" string="Finalized" type="object" class="oe_highlight"/>
-                        <field name="state" widget="statusbar" statusbar_visible="edition, finalized" />
+                        <button name="action_finalized" states="edition" string="Finalized" type="object"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="edition, finalized"/>
                     </header>
                     <sheet>
                         <group col="4">
                             <field name="code" colspan="2"/>
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                            <field name="datetime_start" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_start" colspan="2"
+                                   attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
-                            <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}'/>
+                            <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   required="1" options='{"no_open": True, "no_create": True}'/>
                             <hr colspan="4"/>
-                            <field name="partner_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}" domain="[('supplier', '=', True)]" string="Supplier" required="1" options='{"no_open": True, "no_create": True}'/>
-                            <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}'/>
+                            <field name="partner_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   domain="[('supplier', '=', True)]" string="Supplier" required="1"
+                                   options='{"no_open": True, "no_create": True}'/>
+                            <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   required="1" options='{"no_open": True, "no_create": True}'/>
                             <field name="province_id" colspan="2"/>
                             <hr colspan="4"/>
                             <separator colspan="2"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="invoice" filename="invoice_filename" colspan="4"/>
-                            <notebook colspan="4">
-                                <page string="Lines">
-                                    <field name="line_ids" nolabel="1" attrs="{'readonly': [('state','=', 'finalized')]}">
-                                        <tree editable="bottom">
-                                            <field name="equipment_id"/>
-                                            <field name="qty"/>
-                                            <field name="maintenance_id" invisible="1"/>
-                                        </tree>
-                                    </field>
-                                    <group class="oe_subtotal_footer oe_right">
-                                        <field name="coste_cuc"/>
-                                        <field name="coste_cup"/>
-                                    </group>
-                                </page>
-                            </notebook>
                         </group>
+                        <group string="Labor">
+                            <group>
+                                <field name="labor_days"/>
+                                <field name="labor_hours"/>
+                                <field name="labor_id" invisible="1"/>
+                            </group>
+                            <group/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Equipment">
+                                <field name="line_ids" nolabel="1" attrs="{'readonly': [('state','=', 'finalized')]}">
+                                    <tree editable="bottom">
+                                        <field name="equipment_id"/>
+                                        <field name="qty"/>
+                                        <field name="maintenance_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="coste_cuc" widget="monetary"/>
+                                    <field name="coste_cup" widget="monetary"/>
+                                    <field name="mt"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
@@ -98,23 +113,35 @@
             <field name="arch" type="xml">
                 <form string="Work Order">
                     <header>
-                        <button name="action_finalized" states="edition" string="Finalized" type="object" class="oe_highlight"/>
-                        <field name="state" widget="statusbar" statusbar_visible="edition, finalized" />
+                        <button name="action_finalized" states="edition" string="Finalized" type="object"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="edition, finalized"/>
                     </header>
                     <sheet>
                         <group col="4">
                             <field name="code" colspan="2"/>
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                            <field name="datetime_start" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_start" colspan="2"
+                                   attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
-                            <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}'/>
+                            <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   required="1" options='{"no_open": True, "no_create": True}'/>
                             <hr colspan="4"/>
                             <separator colspan="2"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <group string="Labor">
+                                <group>
+                                    <field name="labor_days"/>
+                                    <field name="labor_hours"/>
+                                    <field name="labor_id" invisible="1"/>
+                                </group>
+                                <group/>
+                            </group>
                             <notebook colspan="4">
                                 <page string="Lines">
-                                    <field name="line_ids" nolabel="1" attrs="{'readonly': [('state','=', 'finalized')]}">
+                                    <field name="line_ids" nolabel="1"
+                                           attrs="{'readonly': [('state','=', 'finalized')]}">
                                         <tree editable="bottom">
                                             <field name="equipment_id"/>
                                             <field name="qty"/>
@@ -124,6 +151,7 @@
                                     <group class="oe_subtotal_footer oe_right">
                                         <field name="coste_cuc"/>
                                         <field name="coste_cup"/>
+                                        <field name="mt"/>
                                     </group>
                                 </page>
                             </notebook>
@@ -139,27 +167,41 @@
             <field name="arch" type="xml">
                 <form string="Work Order">
                     <header>
-                        <button name="action_finalized" states="edition" string="Finalized" type="object" class="oe_highlight"/>
-                        <field name="state" widget="statusbar" statusbar_visible="edition, finalized" />
+                        <button name="action_finalized" states="edition" string="Finalized" type="object"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="edition, finalized"/>
                     </header>
                     <sheet>
                         <group col="4">
                             <field name="code" colspan="2"/>
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                            <field name="datetime_start" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_start" colspan="2"
+                                   attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
-                            <field name="partner_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}" domain="[('supplier', '=', False), ('type', '=', 'external')]" string="Customer" required="1" options='{"no_open": True, "no_create": True}'/>
-                            <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}'/>
+                            <field name="partner_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   domain="[('supplier', '=', False), ('type', '=', 'external')]" string="Customer"
+                                   required="1" options='{"no_open": True, "no_create": True}'/>
+                            <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   required="1" options='{"no_open": True, "no_create": True}'/>
                             <field name="province_id" colspan="2"/>
                             <hr colspan="4"/>
                             <separator colspan="2"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="invoice" filename="invoice_filename" colspan="4"/>
                             <field name="workorder_id" filename="invoice_filename" colspan="4"/>
+                            <group string="Labor">
+                                <group>
+                                    <field name="labor_days"/>
+                                    <field name="labor_hours"/>
+                                    <field name="labor_id" invisible="1"/>
+                                </group>
+                                <group/>
+                            </group>
                             <notebook colspan="4">
                                 <page string="Lines">
-                                    <field name="line_ids" nolabel="1" attrs="{'readonly': [('state','=', 'finalized')]}">
+                                    <field name="line_ids" nolabel="1"
+                                           attrs="{'readonly': [('state','=', 'finalized')]}">
                                         <tree editable="bottom">
                                             <field name="equipment_id"/>
                                             <field name="qty"/>
@@ -169,6 +211,7 @@
                                     <group class="oe_subtotal_footer oe_right">
                                         <field name="coste_cuc"/>
                                         <field name="coste_cup"/>
+                                        <field name="mt"/>
                                     </group>
                                 </page>
                             </notebook>

@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 
-from odoo import fields, models, api
+from odoo import fields, models
 
 
 class McLabor(models.Model):
@@ -11,6 +11,7 @@ class McLabor(models.Model):
     """
     _description = 'Labor Costs'
     _name = "mc.labor"
+    _rec_name = "date"
 
     def _get_default_date(self):
         """
@@ -19,8 +20,9 @@ class McLabor(models.Model):
         date = fields.Date.from_string(fields.Date.today())
         return '{}-01-01'.format(date)
 
-    date = fields.Date(string='Date',
+    date = fields.Date(string='Creation Date',
                        required=True,
+                       index=True,
                        default=_get_default_date)
     coste_cuc = fields.Float(string='Coste (CUC)',
                              required=True)

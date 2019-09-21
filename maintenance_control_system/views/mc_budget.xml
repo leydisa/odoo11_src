@@ -3,7 +3,7 @@
     <data>
 
         <!-- mc.budget views-->
-        <record id="view_mc_labor_tree" model="ir.ui.view">
+        <record id="view_mc_budget_tree" model="ir.ui.view">
             <field name="name">view.mc.budget.tree</field>
             <field name="model">mc.budget</field>
             <field eval="8" name="priority"/>

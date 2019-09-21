@@ -8,7 +8,7 @@
             <field name="model">mc.labor</field>
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
-                <tree string="Material">
+                <tree string="Labor">
                     <field name="date"/>
                     <field name="coste_cuc"/>
                     <field name="coste_cup"/>
