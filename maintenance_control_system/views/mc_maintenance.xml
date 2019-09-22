@@ -78,13 +78,10 @@
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="invoice" filename="invoice_filename" colspan="4"/>
                         </group>
-                        <group string="Labor">
-                            <group>
-                                <field name="labor_days"/>
-                                <field name="labor_hours"/>
+                        <group string="Labor" col="4">
+                                <field name="labor_days" colspan="2"/>
+                                <field name="labor_hours" widget='float_time' colspan="2"/>
                                 <field name="labor_id" invisible="1"/>
-                            </group>
-                            <group/>
                         </group>
                         <notebook colspan="4">
                             <page string="Equipment">
@@ -130,32 +127,29 @@
                             <hr colspan="4"/>
                             <separator colspan="2"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                            <group string="Labor">
-                                <group>
-                                    <field name="labor_days"/>
-                                    <field name="labor_hours"/>
-                                    <field name="labor_id" invisible="1"/>
-                                </group>
-                                <group/>
-                            </group>
-                            <notebook colspan="4">
-                                <page string="Lines">
-                                    <field name="line_ids" nolabel="1"
-                                           attrs="{'readonly': [('state','=', 'finalized')]}">
-                                        <tree editable="bottom">
-                                            <field name="equipment_id"/>
-                                            <field name="qty"/>
-                                            <field name="maintenance_id" invisible="1"/>
-                                        </tree>
-                                    </field>
-                                    <group class="oe_subtotal_footer oe_right">
-                                        <field name="coste_cuc"/>
-                                        <field name="coste_cup"/>
-                                        <field name="mt"/>
-                                    </group>
-                                </page>
-                            </notebook>
                         </group>
+                        <group string="Labor" col="4">
+                                <field name="labor_days" colspan="2"/>
+                                <field name="labor_hours" widget='float_time' colspan="2"/>
+                                <field name="labor_id" invisible="1"/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Lines">
+                                <field name="line_ids" nolabel="1"
+                                       attrs="{'readonly': [('state','=', 'finalized')]}">
+                                    <tree editable="bottom">
+                                        <field name="equipment_id"/>
+                                        <field name="qty"/>
+                                        <field name="maintenance_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="coste_cuc"/>
+                                    <field name="coste_cup"/>
+                                    <field name="mt"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
@@ -190,32 +184,29 @@
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="invoice" filename="invoice_filename" colspan="4"/>
                             <field name="workorder_id" filename="invoice_filename" colspan="4"/>
-                            <group string="Labor">
-                                <group>
-                                    <field name="labor_days"/>
-                                    <field name="labor_hours"/>
-                                    <field name="labor_id" invisible="1"/>
-                                </group>
-                                <group/>
-                            </group>
-                            <notebook colspan="4">
-                                <page string="Lines">
-                                    <field name="line_ids" nolabel="1"
-                                           attrs="{'readonly': [('state','=', 'finalized')]}">
-                                        <tree editable="bottom">
-                                            <field name="equipment_id"/>
-                                            <field name="qty"/>
-                                            <field name="maintenance_id" invisible="1"/>
-                                        </tree>
-                                    </field>
-                                    <group class="oe_subtotal_footer oe_right">
-                                        <field name="coste_cuc"/>
-                                        <field name="coste_cup"/>
-                                        <field name="mt"/>
-                                    </group>
-                                </page>
-                            </notebook>
                         </group>
+                        <group string="Labor" col="4">
+                                <field name="labor_days" colspan="2"/>
+                                <field name="labor_hours" widget='float_time' colspan="2"/>
+                                <field name="labor_id" invisible="1"/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Lines">
+                                <field name="line_ids" nolabel="1"
+                                       attrs="{'readonly': [('state','=', 'finalized')]}">
+                                    <tree editable="bottom">
+                                        <field name="equipment_id"/>
+                                        <field name="qty"/>
+                                        <field name="maintenance_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="coste_cuc"/>
+                                    <field name="coste_cup"/>
+                                    <field name="mt"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>

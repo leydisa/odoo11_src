@@ -45,7 +45,19 @@ class McWorkOrder(models.Model):
                                  store=True)
     maintenance_id = fields.Many2one('mc.maintenance',
                                      string='Maintenance',
-                                     domain="[('supplier', '=', False), ('type', '=', 'external')]")
+                                     required=True,
+                                     domain="[('supplier', '=', False), "
+                                            "('type', '=', 'external'), "
+                                            "('workorder_id', '=', False)]")
+
+    @api.onchange('maintenance_id')
+    def _onchange_maintenance_id(self):
+        """
+
+        :return:
+        """
+        if self.maintenance_id:
+            self.maintenance_id.workorder_id = self.id
 
     @api.one
     def action_finalized(self):

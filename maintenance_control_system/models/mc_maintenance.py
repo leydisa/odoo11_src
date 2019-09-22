@@ -104,14 +104,14 @@ class McMaintenance(models.Model):
                                string="Labor",
                                default=_default_current_labor_coste,
                                ondelete='restrict')
-    labor_days = fields.Float('Worked Days',
+    labor_days = fields.Integer('Worked Days',
                               required=True)
     labor_hours = fields.Float('Hours Worked per Day',
                                required=True)
 
     _sql_constraints = [
-        ('labor_days_zero', 'CHECK (labor_days)', 'The labor days must be greater than 0.'),
-        ('labor_hours_zero', 'CHECK (labor_hours)', 'The labor hours must be greater than 0.'),
+        ('labor_days_zero', 'CHECK (labor_days > 0)', 'The labor days must be greater than 0.'),
+        ('labor_hours_zero', 'CHECK (labor_hours > 0)', 'The labor hours must be greater than 0.'),
     ]
 
     @api.onchange('partner_id')
@@ -151,5 +151,6 @@ class McMaintenanceLine(models.Model):
                              readonly=True)
 
     _sql_constraints = [
-        ('name_ref_uniq', 'unique (name, product_id)', 'The combination of serial number and product must be unique !'),
+        ('equipment_uniq', 'unique (maintenance_id, equipment_id)', 'Repeated equipment!'),
+        ('qty_zero', 'CHECK (qty > 0)', 'Number of equipment greater than 0!'),
     ]

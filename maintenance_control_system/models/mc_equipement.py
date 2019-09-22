@@ -2,7 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 
-from odoo import fields, models, api
+from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 
 
 class McEquipment(models.Model):
@@ -28,6 +29,15 @@ class McEquipment(models.Model):
         """
         self.coste_cuc = sum([x.coste_cuc * x.factor for x in self.material_ids])
         self.coste_cup = sum([x.coste_cup * x.factor for x in self.material_ids])
+
+    @api.constrains('material_ids')
+    def _check_data(self):
+        """
+        It is checked that at least one of the 2 costs must be greater than 0.
+        :return:
+        """
+        if not (self.coste_cuc > 0 or self.coste_cup > 0):
+            raise ValidationError(_('The price must be greater than 0.'))
 
     date = fields.Date(string='Date',
                        required=True,
@@ -64,7 +74,8 @@ class McEquipmentMaterial(models.Model):
         else:
             self.factor_id = False
 
-    equipment_id = fields.Many2one('mc.equipment')
+    equipment_id = fields.Many2one('mc.equipment',
+                                   ondelete='cascade')
     factor = fields.Float(string='Factor',
                           related='factor_id.factor',
                           readonly=True)
@@ -77,11 +88,16 @@ class McEquipmentMaterial(models.Model):
                                  required=True)
     material_id = fields.Many2one('mc.material',
                                   string='Material',
-                                  required=True)
+                                  required=True,
+                                  ondelete='restrict')
     coste_cuc = fields.Float(string='CUC',
                              related='material_id.coste_cuc')
     coste_cup = fields.Float(string='CUP',
                              related='material_id.coste_cup')
+    user_id = fields.Many2one('res.users',
+                              string='User',
+                              readonly=True,
+                              default=lambda self: self.env.user.id)
 
     _sql_constraints = [
         ('material_uniq', 'unique (equipment_id, material_id)',
@@ -107,10 +123,14 @@ class McEquipmentMaterialFactor(models.Model):
                        required=True,
                        default=_get_default_date)
     parent_id = fields.Many2one('mc.equipment.material',
-                                 ondelete='restrict')
+                                ondelete='cascade')
     factor = fields.Float(string='Factor')
     observation = fields.Text('Observation',
                               required=True)
+    user_id = fields.Many2one('res.users',
+                              string='User',
+                              readonly=True,
+                              default=lambda self: self.env.user.id)
 
     _sql_constraints = [
         ('date_uniq', 'unique (parent_id, date)',

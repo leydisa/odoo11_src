@@ -37,7 +37,8 @@ class McContract(models.Model):
     filename = fields.Char('File Name',
                            required=True)
     partner_id = fields.Many2one('mc.partner',
-                                 required=True)
+                                 required=True,
+                                 ondelete='restrict')
     supplier = fields.Boolean(string='Is a Vendor',
                               default=lambda self: self.env.context.get('supplier') or False)
 

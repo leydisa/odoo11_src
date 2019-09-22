@@ -39,12 +39,12 @@
                                         <field name="coste_cuc"/>
                                         <field name="coste_cup"/>
                                         <field name="factor"/>
+                                        <field name="user_id"/>
                                         <field name="equipment_id" invisible="1"/>
                                     </tree>
                                 </field>
                             </page>
                         </notebook>
-
                     </sheet>
                 </form>
             </field>
@@ -58,26 +58,31 @@
                     <sheet>
                         <group>
                             <field name="material_id"/>
-                            <field name="coste_cuc"/>
-                            <field name="coste_cup"/>
-                            <field name="factor"/>
-                            <field name="factor_id" invisible="1"/>
                         </group>
                         <group>
-                            <notebook colspan="2">
-                                <page string="Trace Factor">
-                                    <field name="factor_ids" nolabel="1">
-                                        <tree editable="bottom">
-                                            <field name="date"/>
-                                            <field name="factor"/>
-                                            <field name="observation"/>
-                                            <field name="parent_id" invisible="1"/>
-                                        </tree>
-                                    </field>
-                                </page>
-                            </notebook>
-                            <field name="equipment_id" invisible="1"/>
+                            <group string="Current Costs">
+                                <field name="coste_cuc"/>
+                                <field name="coste_cup"/>
+                            </group>
+                            <group string="Current Factor">
+                                <field name="factor"/>
+                                <field name="factor_id" invisible="1"/>
+                            </group>
                         </group>
+                        <notebook colspan="2">
+                            <page string="Trace Factor">
+                                <field name="factor_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="date"/>
+                                        <field name="factor"/>
+                                        <field name="observation"/>
+                                        <field name="user_id"/>
+                                        <field name="parent_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <field name="equipment_id" invisible="1"/>
                     </sheet>
                 </form>
             </field>

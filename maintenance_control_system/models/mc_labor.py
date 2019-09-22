@@ -30,7 +30,7 @@ class McLabor(models.Model):
                              required=True)
 
     _sql_constraints = [
-        ('coste_zero', 'CHECK (coste_cuc > 0 and coste_cup > 0)', 'The coste must be greater than 0.'),
+        ('coste_zero', 'CHECK (coste_cuc > 0 or coste_cup > 0)', 'The coste must be greater than 0.'),
         ('date_unique', 'unique (date)', 'Repeated date!'),
     ]
 

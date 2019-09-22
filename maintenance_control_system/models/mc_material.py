@@ -2,7 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 
-from odoo import fields, models, api
+from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 
 
 class McMaterial(models.Model):
@@ -26,10 +27,20 @@ class McMaterial(models.Model):
         Calculate the current price of the material.
         :return:
         """
+        print('cambio compute')
         if len(self.coste_ids) > 0:
             self.coste_id = self.coste_ids.sorted(key='date')[-1]
         else:
             self.coste_id = False
+
+    @api.constrains('coste_id')
+    def _check_data(self):
+        """
+        It is checked that at least one of the 2 costs must be greater than 0.
+        :return:
+        """
+        if not (self.coste_id.coste_cuc > 0 or self.coste_id.coste_cup > 0):
+            raise ValidationError(_('The price must be greater than 0.'))
 
     date = fields.Date(string='Date',
                        required=True,
@@ -46,13 +57,19 @@ class McMaterial(models.Model):
     coste_id = fields.Many2one('mc.material.coste',
                                string='Price',
                                compute=_compute_current_coste,
+                               ondelete='restrict',
                                store=True)
     coste_ids = fields.One2many('mc.material.coste', 'material_id',
                                 string='Prices',
                                 required=True)
     um = fields.Many2one('um',
                          string='UM',
-                         required=True)
+                         required=True,
+                         ondelete='restrict')
+    user_id = fields.Many2one('res.users',
+                              string='User',
+                              readonly=True,
+                              default=lambda self: self.env.user.id)
 
 
 class McMaterialCoste(models.Model):
@@ -73,17 +90,21 @@ class McMaterialCoste(models.Model):
                        required=True,
                        default=_get_default_date)
     material_id = fields.Many2one('mc.material',
-                                  ondelete='restrict')
+                                  ondelete='cascade')
     observation = fields.Text('Observation',
                               required=True)
     coste_cuc = fields.Float(string='CUC',
                              required=True)
     coste_cup = fields.Float(string='CUP',
                              required=True)
+    user_id = fields.Many2one('res.users',
+                              string='User',
+                              readonly=True,
+                              default=lambda self: self.env.user.id)
 
     _sql_constraints = [
-        ('coste_zero', 'CHECK (coste_cuc > 0 and coste_cup > 0)',
-         'The price must be greater than 0.'),
+        ('coste_zero', 'CHECK (coste_cuc > 0 or coste_cup > 0)',
+         'The coste must be greater than 0.'),
         ('date_unique', 'unique (material_id, date)',
          'Repeated date!'),
     ]
