@@ -60,6 +60,8 @@
                         <group col="4">
                             <field name="code" colspan="2"/>
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <separator colspan="2"/>
+                            <field name="user_id" colspan="2"/>
                             <field name="datetime_start" colspan="2"
                                    attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
@@ -76,11 +78,11 @@
                             <hr colspan="4"/>
                             <separator colspan="2"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                            <field name="invoice" filename="invoice_filename" colspan="4"/>
+                            <field name="invoice" filename="invoice_filename" colspan="4" required="1" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                         </group>
                         <group string="Labor" col="4">
-                                <field name="labor_days" colspan="2"/>
-                                <field name="labor_hours" widget='float_time' colspan="2"/>
+                                <field name="labor_days" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                                <field name="labor_hours" widget='float_time' colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                                 <field name="labor_id" invisible="1"/>
                         </group>
                         <notebook colspan="4">
@@ -118,6 +120,8 @@
                         <group col="4">
                             <field name="code" colspan="2"/>
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <separator colspan="2"/>
+                            <field name="user_id" colspan="2"/>
                             <field name="datetime_start" colspan="2"
                                    attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
@@ -129,8 +133,8 @@
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                         </group>
                         <group string="Labor" col="4">
-                                <field name="labor_days" colspan="2"/>
-                                <field name="labor_hours" widget='float_time' colspan="2"/>
+                                <field name="labor_days" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                                <field name="labor_hours" widget='float_time' colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                                 <field name="labor_id" invisible="1"/>
                         </group>
                         <notebook colspan="4">
@@ -169,6 +173,8 @@
                         <group col="4">
                             <field name="code" colspan="2"/>
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <separator colspan="2"/>
+                            <field name="user_id" colspan="2"/>
                             <field name="datetime_start" colspan="2"
                                    attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
@@ -182,12 +188,12 @@
                             <hr colspan="4"/>
                             <separator colspan="2"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                            <field name="invoice" filename="invoice_filename" colspan="4"/>
-                            <field name="workorder_id" filename="invoice_filename" colspan="4"/>
+                            <field name="invoice" filename="invoice_filename" required="1" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="workorder_id" colspan="4"/>
                         </group>
                         <group string="Labor" col="4">
-                                <field name="labor_days" colspan="2"/>
-                                <field name="labor_hours" widget='float_time' colspan="2"/>
+                                <field name="labor_days" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                                <field name="labor_hours" widget='float_time' colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                                 <field name="labor_id" invisible="1"/>
                         </group>
                         <notebook colspan="4">
@@ -195,7 +201,7 @@
                                 <field name="line_ids" nolabel="1"
                                        attrs="{'readonly': [('state','=', 'finalized')]}">
                                     <tree editable="bottom">
-                                        <field name="equipment_id"/>
+                                        <field name="equipment_id" options='{"no_open": True, "no_create": True}'/>
                                         <field name="qty"/>
                                         <field name="maintenance_id" invisible="1"/>
                                     </tree>

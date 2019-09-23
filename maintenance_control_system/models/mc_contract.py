@@ -41,6 +41,10 @@ class McContract(models.Model):
                                  ondelete='restrict')
     supplier = fields.Boolean(string='Is a Vendor',
                               default=lambda self: self.env.context.get('supplier') or False)
+    user_id = fields.Many2one('res.users',
+                              string='Created by',
+                              readonly=True,
+                              default=lambda self: self.env.user.id)
 
     @api.one
     def action_finalized(self):
@@ -48,6 +52,7 @@ class McContract(models.Model):
         Generate the code.
         :return:
         """
-        self.code = self.env['ir.sequence'].next_by_code('mc.contract.sequence')
+        sequence = 'mc.%s.contract.sequence' % ('supplier' if self.supplier else 'customer')
+        self.code = self.env['ir.sequence'].next_by_code(sequence)
         return super(McContract, self).action_finalized()
 

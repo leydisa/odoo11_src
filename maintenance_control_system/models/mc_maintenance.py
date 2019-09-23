@@ -47,10 +47,14 @@ class McMaintenance(models.Model):
         self.coste_cup += self.labor_days * self.labor_hours * self.labor_id.coste_cup
         self.mt = self.coste_cuc + self.coste_cup
 
-    @api.constrains('datetime_start', 'datetime_stop')
+    @api.constrains('datetime_start', 'datetime_stop', 'mt')
     def _check_data(self):
-        if (fields.Datetime.from_string(self.datetime_start) >= fields.Datetime.from_string(self.datetime_stop)):
+        if len(self.line_ids) == 0:
+            raise ValidationError(_('Missing maintenance detail.'))
+        if fields.Datetime.from_string(self.datetime_start) >= fields.Datetime.from_string(self.datetime_stop):
             raise ValidationError(_('Contract start date must be less than contract end date.'))
+        if self.mt == 0:
+            raise ValidationError(_('You cannot save maintenance with cost 0.'))
 
     code = fields.Char(string='Code',
                        required=True,
@@ -64,9 +68,11 @@ class McMaintenance(models.Model):
                                      required=True)
     datetime_stop = fields.Datetime(string="",
                                     required=True)
-    partner_id = fields.Many2one('mc.partner')
+    partner_id = fields.Many2one('mc.partner',
+                                 ondelete='restrict')
     contract_id = fields.Many2one('mc.contract',
                                   string='Contract',
+                                  ondelete='restrict',
                                   domain="[('partner_id', '=', partner_id), "
                                          "('state', '=', 'finalized')]")
     province_id = fields.Many2one(string='Province',
@@ -75,7 +81,8 @@ class McMaintenance(models.Model):
     entity_id = fields.Many2one('mc.partner',
                                 string='Entidad',
                                 domain="[('supplier', '=', False), "
-                                       "('type', '=', 'internal')]")
+                                       "('type', '=', 'internal')]",
+                                ondelete='restrict')
     supplier = fields.Boolean(string='Is a Vendor',
                               default=lambda self: self.env.context.get('supplier') or False)
     type = fields.Selection([('internal', 'Internal'),
@@ -99,7 +106,8 @@ class McMaintenance(models.Model):
                       store=True)
     workorder_id = fields.Many2one('mc.work.order',
                                    'Work Order',
-                                   readonly=True)
+                                   readonly=True,
+                                   ondelete='restrict',)
     labor_id = fields.Many2one('mc.labor',
                                string="Labor",
                                default=_default_current_labor_coste,
@@ -108,6 +116,10 @@ class McMaintenance(models.Model):
                               required=True)
     labor_hours = fields.Float('Hours Worked per Day',
                                required=True)
+    user_id = fields.Many2one('res.users',
+                              string='Created by',
+                              readonly=True,
+                              default=lambda self: self.env.user.id)
 
     _sql_constraints = [
         ('labor_days_zero', 'CHECK (labor_days > 0)', 'The labor days must be greater than 0.'),
@@ -139,9 +151,10 @@ class McMaintenanceLine(models.Model):
     _name = "mc.maintenance.line"
 
     maintenance_id = fields.Many2one('mc.maintenance',
-                                     ondelete='restrict')
+                                     ondelete='cascade')
     equipment_id = fields.Many2one('mc.equipment',
-                                   required=True)
+                                   required=True,
+                                   ondelete='restrict')
     qty = fields.Integer(string='Quantity')
     coste_cuc = fields.Float(string='CUC)',
                              related='equipment_id.coste_cuc',

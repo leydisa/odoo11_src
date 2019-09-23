@@ -27,7 +27,6 @@ class McMaterial(models.Model):
         Calculate the current price of the material.
         :return:
         """
-        print('cambio compute')
         if len(self.coste_ids) > 0:
             self.coste_id = self.coste_ids.sorted(key='date')[-1]
         else:

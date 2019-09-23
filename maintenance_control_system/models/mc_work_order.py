@@ -3,6 +3,7 @@
 
 
 from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class McWorkOrder(models.Model):
@@ -21,6 +22,15 @@ class McWorkOrder(models.Model):
         date = fields.Date.from_string(fields.Date.today())
         return '{}-01-01'.format(date)
 
+    @api.constrains('maintenance_id', 'line_ids')
+    def _check_data(self):
+        """
+        Check that it cannot be saved without the detail of the lines.
+        :return:
+        """
+        if len(self.line_ids) == 0:
+            raise ValidationError(_('Missing work order detail.'))
+
     code = fields.Char(string='Code',
                        required=True,
                        readonly=True,
@@ -37,6 +47,7 @@ class McWorkOrder(models.Model):
     file = fields.Binary(string='Document')
     filename = fields.Char('File Name')
     line_ids = fields.One2many('mc.work.order.line', 'workorder_id',
+                               required=True,
                                string='Lines')
     partner_id = fields.Many2one('mc.partner',
                                  string='Customer',
@@ -49,22 +60,25 @@ class McWorkOrder(models.Model):
                                      domain="[('supplier', '=', False), "
                                             "('type', '=', 'external'), "
                                             "('workorder_id', '=', False)]")
-
-    @api.onchange('maintenance_id')
-    def _onchange_maintenance_id(self):
-        """
-
-        :return:
-        """
-        if self.maintenance_id:
-            self.maintenance_id.workorder_id = self.id
+    user_id = fields.Many2one('res.users',
+                              string='Created by',
+                              readonly=True,
+                              default=lambda self: self.env.user.id)
 
     @api.one
     def action_finalized(self):
         """
+        Assign the work order to maintenance.
         Generate the code.
         :return:
         """
+        # Assign the work order to maintenance.
+        maintenance = self.env['mc.maintenance'].browse(self.maintenance_id.id)
+        if maintenance.workorder_id:
+            raise ValidationError(_('The maintenance already has an assigned work order.'))
+        else:
+            maintenance.write({'workorder_id': self.id})
+        # Generate the code.
         self.code = self.env['ir.sequence'].next_by_code('mc.work.order.sequence')
         return super(McWorkOrder, self).action_finalized()
 
@@ -78,10 +92,12 @@ class McWorkOrderLine(models.Model):
 
     equipment_id = fields.Many2one('mc.equipment',
                                    required=True)
-    inventory_no = fields.Char(string='Inventory No.')
+    inventory_no = fields.Char(string='Inventory No.',
+                               required=True)
     local = fields.Text(string='Local',
                         required=True)
     observation = fields.Text('Observation')
-    serial_no = fields.Text(string='Serial No.')
+    serial_no = fields.Text(string='Serial No.',
+                            required=True)
     workorder_id = fields.Many2one('mc.work.order',
-                                   ondelete='restrict')
+                                   ondelete='cascade')

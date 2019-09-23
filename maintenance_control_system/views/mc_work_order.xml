@@ -28,7 +28,9 @@
                     <group col="4">
                         <field name="code" colspan="2"/>
                         <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                        <field name="maintenance_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                        <separator colspan="2"/>
+                        <field name="user_id" colspan="2"/>
+                        <field name="maintenance_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" options='{"no_open": True, "no_create": True}'/>
                         <separator colspan="2"/>
                         <field name="partner_id" colspan="2"/>
                         <field name="contract_id" colspan="2"/>
@@ -38,7 +40,7 @@
                             <page string="Lines">
                                 <field name="line_ids" nolabel="1" attrs="{'readonly': [('state','=', 'finalized')]}">
                                     <tree editable="bottom">
-                                        <field name="equipment_id"/>
+                                        <field name="equipment_id" options='{"no_open": True, "no_create": True}'/>
                                         <field name="local"/>
                                         <field name="serial_no"/>
                                         <field name="inventory_no"/>
