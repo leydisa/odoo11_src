@@ -3,6 +3,7 @@
 
 import datetime
 from odoo import fields, models, api
+from odoo.exceptions import ValidationError
 
 
 def _get_years():
@@ -19,6 +20,44 @@ class McBudget(models.Model):
     _name = "mc.budget"
     _rec_name = "year"
 
+    def add_maintenance_provided(self, date, cuc, cup):
+        """
+
+        :param cuc:
+        :param cup:
+        :return:
+        """
+        year = fields.Datetime.from_string(date).year
+        budget = self.search([('year', '=', year)], limit=1)
+        if len(budget) == 0:
+            raise ValidationError(_('Define the budget for the current year.'))
+        else:
+            budget.write({'used_provided_cuc':  budget.used_provided_cuc + cuc,
+                          'percent_provided_cuc':  ((budget.used_provided_cuc + cuc) * 100)
+                                                   / budget.budget_provided_cuc,
+                          'used_provided_cup':  budget.used_provided_cup + cup,
+                          'percent_provided_cup':  ((budget.used_provided_cup + cup) * 100)
+                                                   / budget.budget_provided_cup})
+
+    def add_maintenance_received(self, date, cuc, cup):
+        """
+
+        :param cuc:
+        :param cup:
+        :return:
+        """
+        year = fields.Datetime.from_string(date).year
+        budget = self.search([('year', '=', year)], limit=1)
+        if len(budget) == 0:
+            raise ValidationError(_('Define the budget for the current year.'))
+        else:
+            budget.write({'used_received_cuc':  budget.used_received_cuc + cuc,
+                          'percent_received_cuc':  ((budget.used_received_cuc + cuc) * 100)
+                                                   / budget.budget_received_cuc,
+                          'used_received_cup':  budget.used_received_cup + cup,
+                          'percent_received_cup':  ((budget.used_received_cup + cup) * 100)
+                                                   / budget.budget_received_cup})
+
     def _get_default_year(self):
         """
         :return: to the current year
@@ -29,18 +68,34 @@ class McBudget(models.Model):
                             string='Year',
                             required=True,
                             default=_get_default_year)
-    maintenance_budget_provided_cuc = fields.Float("CUC",
-                                                   required=True)
-    maintenance_budget_provided_cup = fields.Float("CUP",
-                                                   required=True)
-    maintenance_budget_received_cuc = fields.Float("CUC",
-                                                   required=True)
-    maintenance_budget_received_cup = fields.Float("CUP",
-                                                   required=True)
+    budget_provided_cuc = fields.Float("CUC",
+                                       required=True)
+    budget_provided_cup = fields.Float("CUP",
+                                       required=True)
+    budget_received_cuc = fields.Float("CUC",
+                                       required=True)
+    budget_received_cup = fields.Float("CUP",
+                                       required=True)
+    used_provided_cuc = fields.Float("Used",
+                                     readonly=True)
+    used_provided_cup = fields.Float("Used",
+                                     readonly=True)
+    used_received_cuc = fields.Float("Used",
+                                     readonly=True)
+    used_received_cup = fields.Float("Used",
+                                     readonly=True)
+    percent_provided_cuc = fields.Float("Percent",
+                                        readonly=True)
+    percent_provided_cup = fields.Float("Percent",
+                                        readonly=True)
+    percent_received_cuc = fields.Float("Percent",
+                                        readonly=True)
+    percent_received_cup = fields.Float("Percent",
+                                        readonly=True)
 
     _sql_constraints = [
-        ('budget_zero', 'CHECK (maintenance_budget_provided_cuc > 0 and maintenance_budget_provided_cup > 0'
-                        'and maintenance_budget_received_cuc > 0 and maintenance_budget_received_cup > 0)',
+        ('budget_zero', 'CHECK (budget_provided_cuc > 0 and budget_provided_cup > 0'
+                        'and budget_received_cuc > 0 and budget_received_cup > 0)',
          'The coste must be greater than 0.'),
         ('year_unique', 'unique(year)', 'Repeated year!'),
     ]

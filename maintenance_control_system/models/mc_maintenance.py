@@ -134,12 +134,19 @@ class McMaintenance(models.Model):
     def action_finalized(self):
         """
         Generate the code.
+        Update the budget used.
         :return:
         """
+        # Generate the code
         if self.supplier:
             self.code = self.env['ir.sequence'].next_by_code('mc.maintenance.received.sequence')
         else:
             self.code = self.env['ir.sequence'].next_by_code('mc.%s.maintenance.provided.sequence' % self.type)
+        # Update the budget used
+        if self.supplier:
+            self.env['mc.budget'].add_maintenance_received(self.date, self.coste_cuc, self.coste_cup)
+        else:
+            self.env['mc.budget'].add_maintenance_provided(self.date, self.coste_cuc, self.coste_cup)
         return super(McMaintenance, self).action_finalized()
 
 
