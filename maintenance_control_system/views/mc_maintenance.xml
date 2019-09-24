@@ -219,6 +219,7 @@
         </record>
 
         <record id="view_mc_maintenance_received_search" model="ir.ui.view">
+            <field name="name">mc.maintenance.received.search</field>
             <field name="model">mc.maintenance</field>
             <field name="arch" type="xml">
                 <search>
@@ -234,6 +235,7 @@
         </record>
 
         <record id="view_mc_maintenance_provided_search" model="ir.ui.view">
+            <field name="name">mc.maintenance.provided.search</field>
             <field name="model">mc.maintenance</field>
             <field name="arch" type="xml">
                 <search>

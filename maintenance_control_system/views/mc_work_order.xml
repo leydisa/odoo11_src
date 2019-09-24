@@ -56,6 +56,7 @@
         </record>
 
         <record id="view_mc_work_order_search" model="ir.ui.view">
+            <field name="name">mc.work.order.search</field>
             <field name="model">mc.work.order</field>
             <field name="arch" type="xml">
                 <search>

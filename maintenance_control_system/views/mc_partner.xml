@@ -58,6 +58,7 @@
         </record>
 
         <record id="view_mc_partner_search" model="ir.ui.view">
+            <field name="name">mc.partner.search</field>
             <field name="model">mc.partner</field>
             <field name="arch" type="xml">
                 <search>

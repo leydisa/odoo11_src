@@ -89,6 +89,7 @@
         </record>
 
         <record id="view_mc_contract_search" model="ir.ui.view">
+            <field name="name">mc.contract.search</field>
             <field name="model">mc.contract</field>
             <field name="arch" type="xml">
                 <search>
